@@ -4,7 +4,7 @@ import babel from '@rolldown/plugin-babel'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/Laundrykh/", // <-- IMPORTANT: your repo name
+  base: "/laundry_kh/",  // <-- MUST match your repo name exactly
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] })
