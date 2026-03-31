@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const LAUNDRY_IMG = "https://www.movetocambodia.com/wp-content/uploads/modern-laundry-phnom-penh.jpg";
+const LOGO_URL = "https://instagram.fpnh22-1.fna.fbcdn.net/v/t51.2885-19/459622938_1389301475361097_5856190464083363544_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=instagram.fpnh22-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2gE_F3oPXoPinndqSC_im_zxT-7uXdMN0HRE0wW3ec2FO65NxJ8gh7V5AnQgTmFPC1U&_nc_ohc=T7oWLNy7TOoQ7kNvwFVFiub&_nc_gid=NT9dVA2Yuw4dA5b1n1204g&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Afxi2pXiEyBf6a3kyFX3Tr5XB4R6-iRLOrB0RChVC5D8ng&oe=69D1A6C9&_nc_sid=7a9f4b";
+const SHOP_IMG = "https://www.movetocambodia.com/wp-content/uploads/modern-laundry-phnom-penh.jpg";
 const MAP_IMG = "https://media.wired.com/photos/59269cd37034dc5f91bec0f1/3:2/w_2560%2Cc_limit/GoogleMapTA.jpg";
 
-const BgImage = ({ height, style: s, children, overlayStyle }) => (
+const BgImage = ({ height, style: s, children, overlayStyle, src }) => (
   <div style={{
-    height, backgroundImage: `url(${LAUNDRY_IMG})`, backgroundSize: "cover",
+    height, backgroundImage: `url(${src || SHOP_IMG})`, backgroundSize: "cover",
     backgroundPosition: "center", backgroundColor: "#b8cfe8", position: "relative", ...s,
   }}>
     {overlayStyle && <div style={{ position: "absolute", inset: 0, ...overlayStyle }} />}
@@ -29,6 +30,7 @@ const Icon = ({ name, size = 20, color = C.textSub }) => {
     profile: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke={color} strokeWidth="1.8"/><path d="M4 20C4 17 7.58 15 12 15C16.42 15 20 17 20 20" stroke={color} strokeWidth="1.8" strokeLinecap="round"/></svg>,
     location: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill={color}/></svg>,
     star: <svg width={size} height={size} viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>,
+    starO: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFB800" strokeWidth="1.5"/></svg>,
     wash: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke={color} strokeWidth="1.8"/><circle cx="12" cy="13" r="4" stroke={color} strokeWidth="1.8"/><circle cx="7" cy="7" r="1" fill={color}/></svg>,
     dry: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.8"/><path d="M8 12C8 9.79 9.79 8 12 8" stroke={color} strokeWidth="1.8" strokeLinecap="round"/><circle cx="12" cy="12" r="3" stroke={color} strokeWidth="1.8"/></svg>,
     iron: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M3 16H16L20 10H8L3 16Z" stroke={color} strokeWidth="1.8" strokeLinejoin="round"/><path d="M3 16V18" stroke={color} strokeWidth="1.8" strokeLinecap="round"/></svg>,
@@ -45,6 +47,9 @@ const Icon = ({ name, size = 20, color = C.textSub }) => {
     layers: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke={color} strokeWidth="1.8" strokeLinejoin="round"/><path d="M2 17L12 22L22 17" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 12L12 17L22 12" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
     navigate: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M3 11L22 2L13 21L11 13L3 11Z" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
     filter: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M4 6H20M7 12H17M10 18H14" stroke={color} strokeWidth="2" strokeLinecap="round"/></svg>,
+    settings: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke={color} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={color} strokeWidth="1.8" strokeLinecap="round"/></svg>,
+    mapPin: <svg width={size} height={size} viewBox="0 0 24 24" fill={color}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="white"/></svg>,
+    directions: <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M9 18L3 12L9 6" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 12H15C17.21 12 19 13.79 19 16V21" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M15 6L21 12L15 18" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
   };
   return <span style={{ display: "inline-flex", alignItems: "center" }}>{icons[name] || null}</span>;
 };
@@ -59,6 +64,34 @@ const PrimaryBtn = ({ label, onClick, disabled }) => (
   </button>
 );
 
+// ── STAR DISPLAY ──────────────────────────────────────────────────────────────
+const StarDisplay = ({ rating, size = 13, showCount = true, reviews }) => {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+      <div style={{ display: "flex", gap: 1 }}>
+        {[1,2,3,4,5].map(i => (
+          <svg key={i} width={size} height={size} viewBox="0 0 24 24">
+            {i <= full
+              ? <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFB800"/>
+              : (i === full + 1 && half)
+              ? <>
+                  <defs><linearGradient id={`h${i}`}><stop offset="50%" stopColor="#FFB800"/><stop offset="50%" stopColor="#E2E8F5"/></linearGradient></defs>
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill={`url(#h${i})`}/>
+                </>
+              : <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#E2E8F5"/>
+            }
+          </svg>
+        ))}
+      </div>
+      <span style={{ fontSize: size, fontWeight: 800, color: C.text }}>{rating}</span>
+      {showCount && reviews && <span style={{ fontSize: size - 1, color: C.textMuted }}>({reviews})</span>}
+    </div>
+  );
+};
+
+// ── DATA ──────────────────────────────────────────────────────────────────────
 const shops = [
   { id: 1, name: "CleanKing Laundry", nameKh: "ក្លែនគីង", rating: 4.8, reviews: 234, distance: "0.8 km", time: "25 min", status: "open", tags: ["24h", "Fast"], price: "$1.20", services: ["Wash", "Dry", "Iron", "Pickup"], desc: "Professional laundry in BKK1. Quick turnaround and great care for all fabrics." },
   { id: 2, name: "FreshNow Wash", nameKh: "ហ្វ្រេស្ណូ", rating: 4.6, reviews: 189, distance: "1.2 km", time: "35 min", status: "open", tags: ["Pickup", "Cheap"], price: "$0.90", services: ["Wash", "Dry", "Pickup"], desc: "Budget-friendly wash & fold. Pickup & delivery across Phnom Penh." },
@@ -66,26 +99,37 @@ const shops = [
   { id: 4, name: "Boeng Kak Fresh", nameKh: "បឹងកក់ហ្វ្រេស", rating: 4.4, reviews: 97, distance: "3.0 km", time: "60 min", status: "open", tags: ["24h", "Nearby"], price: "$1.00", services: ["Wash", "Dry"], desc: "Local favorite in Boeng Kak area. Open 24 hours with friendly staff." },
 ];
 
-const LAUNDRY_PIN_ICON = "https://www.creativefabrica.com/wp-content/uploads/2020/02/10/Laundry-Logo-Graphics-1-8.jpg";
+// ── CLEAN24 MAP PINS ──────────────────────────────────────────────────────────
+// Coords mapped to % positions on the MAP_IMG viewport
+// lat range ~11.52–11.64 → top 25%–80%, lng range ~104.85–104.93 → left 15%–90%
+const mapToPercent = (lat, lng) => {
+  const latMin = 11.515, latMax = 11.645;
+  const lngMin = 104.845, lngMax = 104.935;
+  const x = ((lng - lngMin) / (lngMax - lngMin) * 75 + 12).toFixed(1) + "%";
+  const y = ((1 - (lat - latMin) / (latMax - latMin)) * 55 + 18).toFixed(1) + "%";
+  return { x, y };
+};
 
-// Pins spread across the CENTER of the screen — 25%–75% x, 40%–70% y
-const allPins = [
-  { id: 1,  x: "25%", y: "42%", shopId: 1 },
-  { id: 2,  x: "55%", y: "38%", shopId: 2 },
-  { id: 3,  x: "75%", y: "48%", shopId: 3 },
-  { id: 4,  x: "40%", y: "58%", shopId: 4 },
-  { id: 5,  x: "18%", y: "60%", name: "Toul Tom Poung Wash", nameKh: "ទួលទំពូង",   rating: 4.3, reviews: 54,  distance: "1.9 km", time: "40 min", status: "open",   price: "$1.10", services: ["Wash", "Dry"],         tags: ["Nearby"]    },
-  { id: 6,  x: "68%", y: "55%", name: "Aeon Clean Hub",      nameKh: "អ៊ីអន ក្លែន", rating: 4.7, reviews: 143, distance: "2.5 km", time: "45 min", status: "open",   price: "$1.40", services: ["Wash", "Dry", "Iron"],  tags: ["Premium"]   },
-  { id: 7,  x: "82%", y: "42%", name: "Daun Penh Fresh",     nameKh: "ដូនពេញ",       rating: 4.2, reviews: 38,  distance: "3.2 km", time: "55 min", status: "closed", price: "$0.95", services: ["Wash", "Pickup"],        tags: ["Cheap"]     },
-  { id: 8,  x: "32%", y: "68%", name: "Olympic Laundry",     nameKh: "អូឡាំពិក",     rating: 4.5, reviews: 88,  distance: "2.8 km", time: "50 min", status: "open",   price: "$1.15", services: ["Wash", "Dry", "Pickup"], tags: ["Pickup"]    },
-  { id: 9,  x: "60%", y: "68%", name: "Riverside Clean Co.", nameKh: "ជិតទន្លេ",     rating: 4.6, reviews: 211, distance: "3.5 km", time: "60 min", status: "open",   price: "$1.30", services: ["Wash", "Dry", "Iron"],  tags: ["Top Rated"] },
-  { id: 10, x: "78%", y: "62%", name: "Sen Sok Sparkle",     nameKh: "សែនសុខ",       rating: 4.1, reviews: 29,  distance: "4.1 km", time: "70 min", status: "closed", price: "$0.85", services: ["Wash"],                  tags: ["Cheap"]     },
-];
+const clean24Pins = [
+  { id: 1,  lat: 11.5355253, lng: 104.9136226, name: "Clean24 Toul Tompong",   nameKh: "ហាងបោកគក់ ទួលទំពូង",   rating: 4.8, reviews: 312, status: "open",   type: "Laundry",         price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5355253,104.9136226",  services: ["Wash", "Dry", "Iron"] },
+  { id: 2,  lat: 11.5693953, lng: 104.8535036, name: "Clean24 Chouk Meas",     nameKh: "ហាងបោកគក់ ជូកម៉ាស",     rating: 4.9, reviews: 278, status: "open",   type: "Laundry",         price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5693953,104.8535036",  services: ["Wash", "Dry", "Pickup"] },
+  { id: 3,  lat: 11.5568032, lng: 104.8847094, name: "Clean24 Street 2002",    nameKh: "ហាងបោកគក់ ផ្លូវ 2002",   rating: 4.8, reviews: 195, status: "open",   type: "Laundromat",      price: "$1.00", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5568032,104.8847094",  services: ["Wash", "Dry", "Iron", "Pickup"] },
+  { id: 4,  lat: 11.5565045, lng: 104.8927733, name: "Clean24 Samnang 12",     nameKh: "ហាងបោកគក់ សំណាង 12",    rating: 4.7, reviews: 143, status: "open",   type: "Laundry",         price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5565045,104.8927733",  services: ["Wash", "Dry"] },
+  { id: 5,  lat: 11.5254387, lng: 104.8589548, name: "Clean24 Toul Pongro",    nameKh: "ហាងបោកគក់ ទួលពង្រ",     rating: 5.0, reviews: 89,  status: "open",   type: "Laundry service", price: "$1.20", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5254387,104.8589548",  services: ["Wash", "Dry", "Iron"] },
+  { id: 6,  lat: 11.530196,  lng: 104.886961,  name: "Clean24 Chamkardong",    nameKh: "ហាងបោកគក់ ចំការដូង",    rating: 5.0, reviews: 67,  status: "closed", type: "Laundry",         price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.530196,104.886961",    services: ["Wash", "Dry"] },
+  { id: 7,  lat: 11.5234374, lng: 104.8970223, name: "Clean24 Laundry 371",    nameKh: "ហាងបោកគក់ 371",         rating: 5.0, reviews: 112, status: "open",   type: "Laundry service", price: "$1.00", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5234374,104.8970223",  services: ["Wash", "Dry", "Pickup"] },
+  { id: 8,  lat: 11.5709193, lng: 104.9259145, name: "Clean24 Psar Kandal",    nameKh: "ហាងបោកគក់ ផ្សារកណ្ដាល", rating: 4.8, reviews: 224, status: "open",   type: "Laundry",         price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5709193,104.9259145",  services: ["Wash", "Dry", "Iron"] },
+  { id: 9,  lat: 11.632535,  lng: 104.9008479, name: "Clean24 Chrang Chamres", nameKh: "ហាងបោកគក់ ចរង់ចំរេស",  rating: 5.0, reviews: 58,  status: "open",   type: "Laundry",         price: "$1.00", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.632535,104.9008479",   services: ["Wash", "Dry"] },
+  { id: 10, lat: 11.5934038, lng: 104.9112559, name: "Clean24 Toul Sangkae",   nameKh: "ហាងបោកគក់ ទួលសង្កែ",   rating: 4.9, reviews: 176, status: "open",   type: "Laundry",         price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5934038,104.9112559",  services: ["Wash", "Dry", "Iron"] },
+  { id: 11, lat: 11.6155597, lng: 104.9082346, name: "Clean24 Wat Toul",       nameKh: "ហាងបោកគក់ វត្តទួល",     rating: 4.9, reviews: 134, status: "open",   type: "Laundry service", price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.6155597,104.9082346",  services: ["Wash", "Dry", "Pickup"] },
+  { id: 12, lat: 11.5446389, lng: 104.8835833, name: "Clean24 Sala",           nameKh: "ហាងបោកគក់ សាលា",       rating: 4.9, reviews: 98,  status: "open",   type: "Laundry",         price: "$1.00", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5446389,104.8835833",  services: ["Wash", "Dry"] },
+  { id: 13, lat: 11.5836313, lng: 104.9090526, name: "Clean24 Boeung Kak",     nameKh: "ហាងបោកគក់ បឹងកក់",     rating: 4.7, reviews: 203, status: "open",   type: "Laundry service", price: "$1.10", mapUrl: "https://www.google.com/maps/search/?api=1&query=11.5836313,104.9090526",  services: ["Wash", "Dry", "Iron"] },
+].map(p => ({ ...p, ...mapToPercent(p.lat, p.lng) }));
 
 const orderHistory = [
-  { id: "LG-2041", shop: "CleanKing Laundry", date: "Mar 28", price: "$6.50", kg: "5.4", services: "Wash + Iron" },
-  { id: "LG-2038", shop: "FreshNow Wash", date: "Mar 22", price: "$3.60", kg: "4.0", services: "Wash + Pickup" },
-  { id: "LG-2031", shop: "SkyClean Express", date: "Mar 15", price: "$9.00", kg: "5.0", services: "Wash + Iron + Dry" },
+  { id: "LG-2041", shop: "CleanKing Laundry",  date: "Mar 28", price: "$6.50", kg: "5.4", services: "Wash + Iron" },
+  { id: "LG-2038", shop: "FreshNow Wash",       date: "Mar 22", price: "$3.60", kg: "4.0", services: "Wash + Pickup" },
+  { id: "LG-2031", shop: "SkyClean Express",    date: "Mar 15", price: "$9.00", kg: "5.0", services: "Wash + Iron + Dry" },
 ];
 
 // ── SHOP CARD ─────────────────────────────────────────────────────────────────
@@ -108,7 +152,7 @@ const ShopCard = ({ shop, onClick }) => (
           <div style={{ fontSize: 15, fontWeight: 800, color: "white" }}>{shop.name}</div>
           <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", fontStyle: "italic" }}>{shop.nameKh}</div>
         </div>
-        <div style={{ background: "rgba(255,255,255,0.18)", borderRadius: 10, padding: "5px 10px", backdropFilter: "blur(4px)" }}>
+        <div style={{ background: "rgba(255,255,255,0.18)", borderRadius: 10, padding: "5px 10px" }}>
           <span style={{ fontSize: 14, fontWeight: 800, color: "white" }}>{shop.price}<span style={{ fontSize: 10, fontWeight: 500 }}>/kg</span></span>
         </div>
       </div>
@@ -123,7 +167,7 @@ const ShopCard = ({ shop, onClick }) => (
           <Icon name="time" size={12} color={C.textMuted} /><span style={{ fontWeight: 600 }}>{shop.time}</span>
         </div>
         <div style={{ width: 3, height: 3, borderRadius: "50%", background: C.border }} />
-        <span style={{ fontWeight: 600, color: C.textSub }}>{shop.services.length} services</span>
+        <span style={{ fontWeight: 600 }}>{shop.services.length} services</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -140,238 +184,246 @@ const ShopCard = ({ shop, onClick }) => (
 
 // ── MAP PIN ───────────────────────────────────────────────────────────────────
 const MapPin = ({ pin, isActive, onClick }) => {
-  const shopData = pin.shopId ? shops.find(s => s.id === pin.shopId) : pin;
-  const isOpen = shopData.status === "open";
-  const size = isActive ? 48 : 38;
-
+  const isOpen = pin.status === "open";
+  const size = isActive ? 46 : 36;
   return (
-    <div
-      onClick={(e) => { e.stopPropagation(); onClick(pin.id); }}
-      style={{ position: "relative", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
-    >
-      {/* Pulse ring */}
-      {isOpen && (
-        <div style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%, -55%)",
-          width: size + 16, height: size + 16, borderRadius: "50%",
-          background: isActive ? "rgba(26,107,232,0.18)" : "rgba(0,196,140,0.14)",
-          animation: "pulse 2s infinite",
-          pointerEvents: "none",
-        }} />
+    <div onClick={(e) => { e.stopPropagation(); onClick(pin.id); }}
+      style={{ position: "relative", cursor: "pointer", display: "inline-flex", flexDirection: "column", alignItems: "center" }}>
+      {/* Pulse */}
+      {isOpen && isActive && (
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: size + 20, height: size + 20, borderRadius: "50%", background: "rgba(26,107,232,0.15)", animation: "pulse 1.8s infinite", pointerEvents: "none" }} />
       )}
-
-      {/* Pin outer shell — teardrop shape */}
+      {/* Pin body */}
       <div style={{
-        width: size,
-        height: size,
-        borderRadius: "50% 50% 50% 6px",
-        background: isActive
-          ? `linear-gradient(145deg, ${C.primary}, ${C.primaryDark})`
-          : isOpen ? "#ffffff" : "#e8ecf5",
-        border: `2.5px solid ${isActive ? "white" : isOpen ? C.primary : "#b0bace"}`,
+        width: size, height: size,
+        borderRadius: isActive ? "50% 50% 50% 8px" : "50% 50% 50% 6px",
+        background: isActive ? `linear-gradient(145deg, ${C.primary}, ${C.primaryDark})` : isOpen ? C.white : "#eef0f5",
+        border: `2.5px solid ${isActive ? "white" : isOpen ? C.primary : "#b8c0ce"}`,
         boxShadow: isActive
-          ? `0 8px 24px rgba(26,107,232,0.55), 0 0 0 3px rgba(26,107,232,0.2)`
-          : isOpen
-            ? "0 4px 16px rgba(26,107,232,0.28)"
-            : "0 3px 10px rgba(0,0,0,0.14)",
+          ? `0 8px 28px rgba(26,107,232,0.55), 0 0 0 3px rgba(26,107,232,0.2)`
+          : isOpen ? "0 4px 14px rgba(26,107,232,0.25)" : "0 2px 8px rgba(0,0,0,0.12)",
         display: "flex", alignItems: "center", justifyContent: "center",
-        overflow: "hidden",
-        transition: "all 0.2s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: isActive ? "scale(1.12)" : "scale(1)",
-        position: "relative",
+        transition: "all 0.22s cubic-bezier(0.34,1.56,0.64,1)",
+        transform: isActive ? "scale(1.1)" : "scale(1)",
+        overflow: "hidden", position: "relative",
       }}>
-        {/* Laundry logo image */}
-        <img
-          src={LAUNDRY_PIN_ICON}
-          alt="laundry"
-          style={{
-            width: isActive ? 32 : 24,
-            height: isActive ? 32 : 24,
-            objectFit: "cover",
-            borderRadius: "50%",
-            filter: isOpen ? "none" : "grayscale(60%) opacity(0.6)",
-          }}
+        {/* Logo */}
+        <img src={LOGO_URL} alt="C24"
+          style={{ width: isActive ? 32 : 24, height: isActive ? 32 : 24, objectFit: "cover", borderRadius: "50%", filter: isOpen ? "none" : "grayscale(60%) opacity(0.55)" }}
+          onError={e => { e.target.style.display = "none"; }}
         />
-        {/* Closed overlay tint */}
-        {!isOpen && (
-          <div style={{ position: "absolute", inset: 0, background: "rgba(160,173,190,0.3)", borderRadius: "inherit" }} />
-        )}
+        {!isOpen && <div style={{ position: "absolute", inset: 0, background: "rgba(160,173,190,0.3)", borderRadius: "inherit" }} />}
       </div>
-
-      {/* Price bubble — always visible on active, hidden otherwise */}
-      <div style={{
-        position: "absolute",
-        top: -22,
-        left: "50%",
-        transform: "translateX(-50%)",
-        background: isActive ? C.primary : "rgba(255,255,255,0.95)",
-        color: isActive ? "white" : C.primary,
-        fontSize: 10,
-        fontWeight: 800,
-        padding: "2px 7px",
-        borderRadius: 8,
-        whiteSpace: "nowrap",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.14)",
-        border: isActive ? "none" : `1px solid ${C.border}`,
-        opacity: isActive ? 1 : 0,
-        transition: "opacity 0.18s",
-        pointerEvents: "none",
-      }}>
-        {shopData.price}/kg
-      </div>
-
-      {/* Open/closed dot indicator */}
-      <div style={{
-        position: "absolute",
-        bottom: -3,
-        right: -3,
-        width: 10,
-        height: 10,
-        borderRadius: "50%",
-        background: isOpen ? C.accent : "#a0a8b8",
-        border: "2px solid white",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
-      }} />
+      {/* Price label on active */}
+      {isActive && (
+        <div style={{ position: "absolute", top: -20, left: "50%", transform: "translateX(-50%)", background: C.primary, color: "white", fontSize: 10, fontWeight: 800, padding: "2px 7px", borderRadius: 8, whiteSpace: "nowrap", boxShadow: "0 2px 8px rgba(0,0,0,0.18)", pointerEvents: "none" }}>
+          {pin.price}/kg
+        </div>
+      )}
+      {/* Open/closed dot */}
+      <div style={{ position: "absolute", bottom: -2, right: -2, width: 10, height: 10, borderRadius: "50%", background: isOpen ? C.accent : "#a0a8b8", border: "2px solid white", boxShadow: "0 1px 3px rgba(0,0,0,0.15)" }} />
     </div>
   );
 };
 
 // ── PIN POPUP ─────────────────────────────────────────────────────────────────
 const PinPopup = ({ pin, onClose, onViewShop }) => {
-  const shopData = pin.shopId ? shops.find(s => s.id === pin.shopId) : pin;
-  const isOpen = shopData.status === "open";
+  const isOpen = pin.status === "open";
+  const svcIcons = { Wash: "wash", Dry: "dry", Iron: "iron", Pickup: "pickup" };
+  const svcColors = { Wash: "#1A6BE8", Dry: "#00C48C", Iron: "#FF8C00", Pickup: "#9B59B6" };
 
   return (
     <div style={{
       position: "absolute", bottom: 0, left: 0, right: 0,
-      background: C.white,
-      borderRadius: "22px 22px 0 0",
-      boxShadow: "0 -8px 40px rgba(13,27,53,0.18)",
-      padding: "0 0 20px",
+      background: C.white, borderRadius: "24px 24px 0 0",
+      boxShadow: "0 -10px 40px rgba(13,27,53,0.18)",
       zIndex: 30,
-      animation: "slideUp 0.28s cubic-bezier(0.34,1.56,0.64,1)",
+      animation: "slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)",
     }}>
       {/* Drag handle */}
-      <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 8px" }}>
-        <div style={{ width: 36, height: 4, borderRadius: 2, background: C.border }} />
+      <div style={{ display: "flex", justifyContent: "center", paddingTop: 12, paddingBottom: 6 }}>
+        <div style={{ width: 38, height: 4, borderRadius: 2, background: C.border }} />
       </div>
 
       {/* Close */}
-      <button
-        onClick={onClose}
-        style={{ position: "absolute", top: 12, right: 16, width: 32, height: 32, borderRadius: 10, background: C.surface, border: `1px solid ${C.border}`, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-      >
+      <button onClick={onClose} style={{ position: "absolute", top: 14, right: 16, width: 32, height: 32, borderRadius: 10, background: C.surface, border: `1px solid ${C.border}`, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Icon name="close" size={14} color={C.textSub} />
       </button>
 
-      <div style={{ padding: "0 18px" }}>
-        {/* Header row */}
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 12 }}>
-          <div style={{ flex: 1, marginRight: 12 }}>
-            <div style={{ fontSize: 17, fontWeight: 800, color: C.text, letterSpacing: -0.3 }}>{shopData.name}</div>
-            <div style={{ fontSize: 12, color: C.textSub, fontStyle: "italic", marginTop: 1 }}>{shopData.nameKh}</div>
+      <div style={{ padding: "4px 18px 24px" }}>
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
+          {/* Logo thumb */}
+          <div style={{ width: 52, height: 52, borderRadius: 15, overflow: "hidden", border: `2px solid ${C.border}`, flexShrink: 0 }}>
+            <img src={LOGO_URL} alt="logo" style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              onError={e => { e.target.style.background = C.primaryLight; e.target.style.display = "none"; }} />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 16, fontWeight: 800, color: C.text, letterSpacing: -0.3, lineHeight: 1.2 }}>{pin.name}</div>
+            <div style={{ fontSize: 12, color: C.textSub, fontStyle: "italic", marginTop: 2 }}>{pin.nameKh}</div>
+            {/* Stars */}
+            <div style={{ marginTop: 5 }}>
+              <StarDisplay rating={pin.rating} reviews={pin.reviews} size={12} />
+            </div>
           </div>
           <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: C.primary }}>{shopData.price}<span style={{ fontSize: 11, fontWeight: 600, color: C.textSub }}>/kg</span></div>
+            <div style={{ fontSize: 20, fontWeight: 800, color: C.primary }}>{pin.price}</div>
+            <div style={{ fontSize: 11, color: C.textMuted }}>/kg</div>
           </div>
         </div>
 
-        {/* Status + Rating */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+        {/* Status + type + distance row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 5, background: isOpen ? C.accentLight : "#F5F6FA", borderRadius: 20, padding: "4px 10px" }}>
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: isOpen ? C.accent : C.textMuted }} />
             <span style={{ fontSize: 11, fontWeight: 700, color: isOpen ? C.accent : C.textMuted }}>{isOpen ? "Open Now" : "Closed"}</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <Icon name="star" size={13} />
-            <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{shopData.rating}</span>
-            <span style={{ fontSize: 11, color: C.textMuted }}>({shopData.reviews})</span>
-          </div>
+          <div style={{ fontSize: 11, color: C.textSub, background: C.surface, borderRadius: 20, padding: "4px 10px", fontWeight: 600, border: `1px solid ${C.border}` }}>{pin.type}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: "auto" }}>
             <Icon name="location" size={12} color={C.textMuted} />
-            <span style={{ fontSize: 12, fontWeight: 600, color: C.textSub }}>{shopData.distance}</span>
-            <span style={{ fontSize: 11, color: C.textMuted }}>· {shopData.time}</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: C.textSub }}>Phnom Penh</span>
           </div>
         </div>
 
         {/* Services */}
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
-          {shopData.services.map(s => <Tag key={s} label={s} color={C.primary} />)}
-          {shopData.tags && shopData.tags.map(t => <Tag key={t} label={t} color={C.textSub} />)}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 9 }}>Services</div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {pin.services.map(s => (
+              <div key={s} style={{ display: "flex", alignItems: "center", gap: 5, background: svcColors[s] + "12", borderRadius: 10, padding: "5px 10px" }}>
+                <Icon name={svcIcons[s]} size={13} color={svcColors[s]} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: svcColors[s] }}>{s}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* CTA */}
-        <button
-          onClick={() => onViewShop(shopData)}
-          style={{
-            width: "100%", padding: "14px",
+        {/* Review count bar */}
+        <div style={{ background: C.surface, borderRadius: 12, padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "space-between", border: `1px solid ${C.border}` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: C.primary }}>{pin.rating}</div>
+            <div>
+              <StarDisplay rating={pin.rating} reviews={null} size={12} showCount={false} />
+              <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{pin.reviews} reviews</div>
+            </div>
+          </div>
+          <div style={{ width: 1, height: 36, background: C.border }} />
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 16, fontWeight: 800, color: C.text }}>{pin.services.length}</div>
+            <div style={{ fontSize: 11, color: C.textMuted }}>Services</div>
+          </div>
+          <div style={{ width: 1, height: 36, background: C.border }} />
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 14, fontWeight: 800, color: isOpen ? C.accent : C.textMuted }}>{isOpen ? "Open" : "Closed"}</div>
+            <div style={{ fontSize: 11, color: C.textMuted }}>Status</div>
+          </div>
+        </div>
+
+        {/* CTA buttons */}
+        <div style={{ display: "flex", gap: 10 }}>
+          {/* Google Maps navigation */}
+          <a href={pin.mapUrl} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textDecoration: "none" }}>
+            <button style={{
+              width: "100%", padding: "13px",
+              background: "white", color: C.primary,
+              border: `1.5px solid ${C.primary}`,
+              borderRadius: 14, fontSize: 13, fontWeight: 700, cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
+              boxShadow: "0 2px 8px rgba(26,107,232,0.12)",
+            }}>
+              <Icon name="mapPin" size={16} color={C.primary} />
+              Directions
+            </button>
+          </a>
+          {/* Book / View */}
+          <button onClick={() => onViewShop(pin)} style={{
+            flex: 2, padding: "13px",
             background: `linear-gradient(135deg, ${C.primary} 0%, ${C.primaryDark} 100%)`,
-            color: "white", borderRadius: 14, border: "none",
-            fontSize: 15, fontWeight: 700, cursor: "pointer",
+            color: "white", border: "none", borderRadius: 14,
+            fontSize: 14, fontWeight: 700, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
             boxShadow: "0 6px 20px rgba(26,107,232,0.32)",
-            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-          }}
-        >
-          <Icon name="navigate" size={16} color="white" />
-          View Shop Details
-        </button>
+          }}>
+            <Icon name="navigate" size={16} color="white" />
+            View & Book
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-// ── EXPLORE (MAP) SCREEN ──────────────────────────────────────────────────────
+// ── EXPLORE SCREEN ────────────────────────────────────────────────────────────
 const ExploreScreen = ({ onSelectShop }) => {
   const [activePin, setActivePin] = useState(null);
   const [activeFilter, setActiveFilter] = useState("All");
-  const filters = ["All", "Open", "24h", "Cheap", "Premium"];
+  const filters = ["All", "Open", "Top Rated", "Cheap", "Nearby"];
 
-  const activePinData = activePin ? allPins.find(p => p.id === activePin) : null;
+  const activePinData = activePin ? clean24Pins.find(p => p.id === activePin) : null;
 
-//   const getShopForPin = (pin) => {
-//     if (pin.shopId) return shops.find(s => s.id === pin.shopId);
-//     return pin;
-//   };
+  const filtered = clean24Pins.filter(p => {
+    if (activeFilter === "Open") return p.status === "open";
+    if (activeFilter === "Top Rated") return p.rating >= 4.9;
+    if (activeFilter === "Cheap") return parseFloat(p.price.replace("$","")) <= 1.0;
+    return true;
+  });
 
-  const handleViewShop = (shopData) => {
-    // If it has a shopId, find the full shop object
-    const fullShop = shops.find(s => s.name === shopData.name) || shopData;
-    // For extra pins without full shop data, use shops[0] as fallback to navigate
-    onSelectShop(fullShop.services ? fullShop : shops[0]);
+  const handleViewShop = (pinData) => {
+    // Build a shop-compatible object from pin data
+    const shopObj = {
+      name: pinData.name, nameKh: pinData.nameKh,
+      rating: pinData.rating, reviews: pinData.reviews,
+      distance: "See map", time: "—",
+      status: pinData.status, tags: [pinData.type],
+      price: pinData.price, services: pinData.services,
+      desc: `${pinData.name} is a trusted Clean24 franchise laundry in Phnom Penh offering quality wash & fold services.`,
+    };
+    onSelectShop(shopObj);
   };
 
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", background: C.bg, position: "relative", overflow: "hidden" }}>
       <style>{`
-        @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.6} 50%{transform:translate(-50%,-50%) scale(1.8);opacity:0} }
+        @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5} 50%{transform:translate(-50%,-50%) scale(2.2);opacity:0} }
         @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
-        @keyframes pinDrop { from{transform:translate(-50%,-80%);opacity:0} to{transform:translate(-50%,-100%);opacity:1} }
+        @keyframes pinDrop { from{transform:translateY(-12px);opacity:0} to{transform:translateY(0);opacity:1} }
       `}</style>
 
-      {/* Top search bar */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, zIndex: 20,
-        padding: "14px 16px 0",
-      }}>
-        <div style={{
-          background: "rgba(255,255,255,0.97)",
-          borderRadius: 18,
-          boxShadow: "0 4px 24px rgba(13,27,53,0.14)",
-          border: `1px solid ${C.border}`,
-          overflow: "hidden",
-        }}>
-          {/* Search input row */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px" }}>
-            <Icon name="search" size={17} color={C.textMuted} />
-            <span style={{ fontSize: 14, color: C.textMuted, flex: 1 }}>Search in Phnom Penh...</span>
-            <div style={{ width: 1, height: 18, background: C.border }} />
-            <button style={{ display: "flex", alignItems: "center", gap: 5, background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-              <Icon name="filter" size={16} color={C.primary} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>Filter</span>
-            </button>
+      {/* Full-screen map */}
+      <div style={{ position: "absolute", inset: 0, overflow: "hidden" }} onClick={() => setActivePin(null)}>
+        <img src={MAP_IMG} alt="Map" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(13,27,53,0.04)" }} />
+
+        {/* Clean24 Pins */}
+        {filtered.map((pin, idx) => (
+          <div key={pin.id} style={{
+            position: "absolute", left: pin.x, top: pin.y,
+            transform: "translate(-50%, -50%)",
+            zIndex: activePin === pin.id ? 20 : 10,
+            animation: `pinDrop 0.35s ${idx * 0.05}s ease both`,
+          }}>
+            <MapPin pin={pin} isActive={activePin === pin.id} onClick={id => setActivePin(activePin === id ? null : id)} />
           </div>
-          {/* Filter chips */}
+        ))}
+
+        {/* User dot */}
+        <div style={{ position: "absolute", left: "49%", top: "52%", transform: "translate(-50%,-50%)", zIndex: 15, pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 32, height: 32, borderRadius: "50%", background: "rgba(26,107,232,0.15)", animation: "pulse 2s infinite" }} />
+          <div style={{ width: 14, height: 14, borderRadius: "50%", background: C.primary, border: "3px solid white", boxShadow: "0 2px 8px rgba(26,107,232,0.5)" }} />
+        </div>
+      </div>
+
+      {/* Top search + filters */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 20, padding: "14px 14px 0" }}>
+        <div style={{ background: "rgba(255,255,255,0.97)", borderRadius: 18, boxShadow: "0 4px 24px rgba(13,27,53,0.14)", border: `1px solid ${C.border}`, overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px" }}>
+            <img src={LOGO_URL} alt="c24" style={{ width: 28, height: 28, borderRadius: 8, objectFit: "cover" }} onError={e => e.target.style.display="none"} />
+            <span style={{ fontSize: 14, fontWeight: 700, color: C.text, flex: 1 }}>Clean24 Laundry – Phnom Penh</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 4, background: C.accentLight, borderRadius: 20, padding: "3px 10px" }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.accent }} />
+              <span style={{ fontSize: 11, fontWeight: 700, color: C.accent }}>{filtered.filter(p=>p.status==="open").length} Open</span>
+            </div>
+          </div>
           <div style={{ display: "flex", gap: 7, overflowX: "auto", scrollbarWidth: "none", padding: "0 14px 12px" }}>
             {filters.map(f => (
               <button key={f} onClick={() => setActiveFilter(f)} style={{
@@ -380,105 +432,30 @@ const ExploreScreen = ({ onSelectShop }) => {
                 color: activeFilter === f ? "white" : C.textSub,
                 fontSize: 12, fontWeight: 700,
                 boxShadow: activeFilter === f ? "0 3px 10px rgba(26,107,232,0.3)" : "none",
-                transition: "all 0.15s",
               }}>{f}</button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Map area — full screen behind everything */}
-      <div
-        style={{ position: "absolute", inset: 0, overflow: "hidden" }}
-        onClick={() => setActivePin(null)}
-      >
-        {/* Map image fills entire screen */}
-        <img
-          src={MAP_IMG}
-          alt="Map"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center center",
-            display: "block",
-          }}
-        />
-
-        {/* Subtle overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "rgba(13,27,53,0.03)" }} />
-
-        {/* Pins — use px offsets so they land in the visible center regardless of search bar */}
-        {allPins.map((pin, idx) => (
-          <div key={pin.id} style={{
-            position: "absolute",
-            left: pin.x,
-            top: pin.y,
-            transform: "translate(-50%, -50%)",
-            zIndex: activePin === pin.id ? 20 : 10,
-            animation: `pinDrop 0.4s ${idx * 0.06}s ease both`,
-          }}>
-            <MapPin
-              pin={pin}
-              isActive={activePin === pin.id}
-              onClick={(id) => setActivePin(activePin === id ? null : id)}
-            />
-          </div>
-        ))}
-
-        {/* "You are here" dot */}
-        <div style={{ position: "absolute", left: "47%", top: "55%", transform: "translate(-50%,-50%)", zIndex: 15, pointerEvents: "none" }}>
-          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 30, height: 30, borderRadius: "50%", background: "rgba(26,107,232,0.15)", animation: "pulse 2s infinite" }} />
-          <div style={{ width: 14, height: 14, borderRadius: "50%", background: C.primary, border: "3px solid white", boxShadow: "0 2px 8px rgba(26,107,232,0.5)" }} />
-        </div>
-      </div>
-
-      {/* Bottom controls */}
-      <div style={{
-        position: "absolute", right: 14, bottom: activePinData ? 228 : 16,
-        display: "flex", flexDirection: "column", gap: 8,
-        transition: "bottom 0.3s ease",
-        zIndex: 20,
-      }}>
-        {[
-          { icon: "navigate", label: "My location" },
-          { icon: "layers", label: "Layers" },
-        ].map(btn => (
-          <button key={btn.icon} style={{
-            width: 44, height: 44, borderRadius: 14,
-            background: "rgba(255,255,255,0.97)",
-            border: `1px solid ${C.border}`,
-            boxShadow: "0 4px 16px rgba(13,27,53,0.12)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer",
-          }}>
-            <Icon name={btn.icon} size={18} color={C.primary} />
+      {/* Bottom right controls */}
+      <div style={{ position: "absolute", right: 14, bottom: activePinData ? 320 : 16, display: "flex", flexDirection: "column", gap: 8, transition: "bottom 0.3s ease", zIndex: 20 }}>
+        {["navigate","layers"].map(icon => (
+          <button key={icon} style={{ width: 44, height: 44, borderRadius: 14, background: "rgba(255,255,255,0.97)", border: `1px solid ${C.border}`, boxShadow: "0 4px 16px rgba(13,27,53,0.12)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+            <Icon name={icon} size={18} color={C.primary} />
           </button>
         ))}
       </div>
 
-      {/* Shop count badge */}
-      <div style={{
-        position: "absolute", left: 14, bottom: activePinData ? 228 : 16,
-        background: "rgba(255,255,255,0.97)",
-        borderRadius: 14, padding: "8px 14px",
-        boxShadow: "0 4px 16px rgba(13,27,53,0.12)",
-        border: `1px solid ${C.border}`,
-        display: "flex", alignItems: "center", gap: 7,
-        transition: "bottom 0.3s ease",
-        zIndex: 20,
-      }}>
-        <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.accent }} />
-        <span style={{ fontSize: 12, fontWeight: 700, color: C.text }}>10 Shops Found</span>
+      {/* Shop count */}
+      <div style={{ position: "absolute", left: 14, bottom: activePinData ? 320 : 16, background: "rgba(255,255,255,0.97)", borderRadius: 14, padding: "8px 14px", boxShadow: "0 4px 16px rgba(13,27,53,0.12)", border: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 7, transition: "bottom 0.3s ease", zIndex: 20 }}>
+        <img src={LOGO_URL} alt="" style={{ width: 20, height: 20, borderRadius: 6, objectFit: "cover" }} onError={e => e.target.style.display="none"}/>
+        <span style={{ fontSize: 12, fontWeight: 700, color: C.text }}>{filtered.length} Shops Found</span>
       </div>
 
       {/* Popup */}
       {activePinData && (
-        <PinPopup
-          pin={activePinData}
-          onClose={() => setActivePin(null)}
-          onViewShop={handleViewShop}
-        />
+        <PinPopup pin={activePinData} onClose={() => setActivePin(null)} onViewShop={handleViewShop} />
       )}
     </div>
   );
@@ -487,7 +464,6 @@ const ExploreScreen = ({ onSelectShop }) => {
 // ── HOME ──────────────────────────────────────────────────────────────────────
 const HomeScreen = ({ onSelectShop }) => {
   const [chip, setChip] = useState("All");
-  const chips = ["All", "24h", "Cheap", "Top Rated", "Nearby"];
   return (
     <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
       <div style={{ background: C.white, padding: "18px 20px 20px", borderBottom: `1px solid ${C.border}` }}>
@@ -532,7 +508,7 @@ const HomeScreen = ({ onSelectShop }) => {
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 22 }}>
-          {[{emoji:"⚡",label:"Fastest",val:"25 min"},{emoji:"💰",label:"From",val:"$0.90/kg"},{emoji:"🏪",label:"Nearby",val:"4 Shops"}].map(s => (
+          {[{emoji:"⚡",label:"Fastest",val:"25 min"},{emoji:"💰",label:"From",val:"$0.90/kg"},{emoji:"🏪",label:"Nearby",val:"13 Shops"}].map(s => (
             <div key={s.label} style={{ background: C.white, borderRadius: 14, padding: "12px 8px", textAlign: "center", border: `1px solid ${C.border}`, boxShadow: "0 1px 8px rgba(13,27,53,0.04)" }}>
               <div style={{ fontSize: 20, marginBottom: 4 }}>{s.emoji}</div>
               <div style={{ fontSize: 13, fontWeight: 800, color: C.text }}>{s.val}</div>
@@ -542,7 +518,7 @@ const HomeScreen = ({ onSelectShop }) => {
         </div>
 
         <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none", marginBottom: 18, paddingBottom: 2 }}>
-          {chips.map(c => (
+          {["All","24h","Cheap","Top Rated","Nearby"].map(c => (
             <button key={c} onClick={() => setChip(c)} style={{ padding: "7px 16px", borderRadius: 20, border: chip===c ? "none" : `1.5px solid ${C.border}`, background: chip===c ? C.primary : C.white, color: chip===c ? C.white : C.textSub, fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", boxShadow: chip===c ? "0 4px 12px rgba(26,107,232,0.28)" : "none", flexShrink: 0 }}>{c}</button>
           ))}
         </div>
@@ -595,12 +571,10 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
           <span style={{ fontSize: 13, fontWeight: 700, color: shop.status === "open" ? C.accent : C.textMuted }}>{shop.status === "open" ? "Open Now" : "Closed"}</span>
         </div>
         <div style={{ width: 1, height: 14, background: C.border }} />
-        <Icon name="star" size={13} />
-        <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{shop.rating}</span>
-        <span style={{ fontSize: 12, color: C.textMuted }}>({shop.reviews})</span>
-        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4 }}>
+        <StarDisplay rating={shop.rating} reviews={shop.reviews} size={12} />
+        <div style={{ marginLeft: "auto" }}>
           <Icon name="location" size={13} color={C.textMuted} />
-          <span style={{ fontSize: 12, color: C.textSub, fontWeight: 600 }}>{shop.distance}</span>
+          <span style={{ fontSize: 12, color: C.textSub, fontWeight: 600, marginLeft: 4 }}>{shop.distance}</span>
         </div>
       </div>
 
@@ -609,7 +583,6 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 8 }}>About</div>
           <div style={{ fontSize: 13, color: C.textSub, lineHeight: 1.75, background: C.white, borderRadius: 14, padding: "13px 15px", border: `1px solid ${C.border}` }}>{shop.desc || "Quality laundry service in Phnom Penh."}</div>
         </div>
-
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 12 }}>Services Offered</div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
@@ -626,7 +599,6 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
             ))}
           </div>
         </div>
-
         <div style={{ background: `linear-gradient(135deg, ${C.primaryLight}, #daeeff)`, borderRadius: 16, padding: "16px 18px", marginBottom: 22, border: `1px solid ${C.primary}22`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <div style={{ fontSize: 12, color: C.primary, fontWeight: 600, marginBottom: 2 }}>Starting from</div>
@@ -637,7 +609,6 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
             <div style={{ fontSize: 15, fontWeight: 700, color: C.text }}>2 kg</div>
           </div>
         </div>
-
         <PrimaryBtn label="Book This Shop" onClick={onBook} />
       </div>
     </div>
@@ -654,7 +625,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
   const svcIcons = { Wash: "wash", Dry: "dry", Iron: "iron", Pickup: "pickup" };
   const selected = Object.keys(services).filter(k => services[k]);
   const total = selected.reduce((s, k) => s + svcPrice[k] * kg, 0).toFixed(2);
-
   return (
     <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
       <div style={{ background: C.white, padding: "16px 18px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 12 }}>
@@ -666,7 +636,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
           <div style={{ fontSize: 12, color: C.textSub }}>{shop.name}</div>
         </div>
       </div>
-
       <div style={{ padding: "18px 18px 28px" }}>
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 12 }}>Select Services</div>
@@ -688,7 +657,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             </div>
           ))}
         </div>
-
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 12 }}>Estimated Weight</div>
           <div style={{ background: C.white, borderRadius: 16, padding: "16px 20px", border: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -700,7 +668,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             <button onClick={() => setKg(kg+1)} style={{ width: 42, height: 42, borderRadius: 12, background: C.primary, border: "none", fontSize: 22, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "white", boxShadow: "0 4px 14px rgba(26,107,232,0.35)" }}>+</button>
           </div>
         </div>
-
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 12 }}>Pickup Time</div>
           <div style={{ display: "flex", gap: 10 }}>
@@ -713,7 +680,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             ))}
           </div>
         </div>
-
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 12 }}>Pickup Address</div>
           <div style={{ display: "flex", alignItems: "center", gap: 12, background: C.white, borderRadius: 14, padding: "14px", border: `1.5px solid ${C.border}` }}>
@@ -727,7 +693,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             <Icon name="chevron" size={16} color={C.textMuted} />
           </div>
         </div>
-
         <div style={{ background: C.white, borderRadius: 16, padding: "16px", border: `1px solid ${C.border}`, marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 12 }}>Price Summary</div>
           {selected.map(s => (
@@ -746,7 +711,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             <span style={{ fontSize: 24, fontWeight: 800, color: C.primary }}>${total}</span>
           </div>
         </div>
-
         <PrimaryBtn label="Confirm Booking" onClick={onConfirm} disabled={selected.length === 0} />
       </div>
     </div>
@@ -756,11 +720,11 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
 // ── TRACKING ──────────────────────────────────────────────────────────────────
 const TrackingScreen = ({ onBack }) => {
   const steps = [
-    { label: "Order Placed", sub: "09:00 AM", done: true },
-    { label: "Picked Up", sub: "09:45 AM", done: true },
-    { label: "Washing", sub: "In progress", done: false, active: true },
-    { label: "Delivering", sub: "Est. 12:30 PM", done: false },
-    { label: "Completed", sub: "—", done: false },
+    { label: "Order Placed",  sub: "09:00 AM",    done: true },
+    { label: "Picked Up",     sub: "09:45 AM",    done: true },
+    { label: "Washing",       sub: "In progress", done: false, active: true },
+    { label: "Delivering",    sub: "Est. 12:30 PM", done: false },
+    { label: "Completed",     sub: "—",            done: false },
   ];
   return (
     <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
@@ -946,8 +910,49 @@ const ProfileScreen = () => (
   </div>
 );
 
+// ── SPLASH ────────────────────────────────────────────────────────────────────
+const SplashScreen = ({ onDone }) => {
+  const [phase, setPhase] = useState("in");
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase("hold"), 400);
+    const t2 = setTimeout(() => setPhase("out"), 2200);
+    const t3 = setTimeout(() => onDone(), 2700);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, []);
+  return (
+    <div style={{ position: "absolute", inset: 0, zIndex: 999, background: `linear-gradient(160deg, #0D1B35 0%, #1A3A6B 50%, #1355C0 100%)`, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", opacity: phase === "out" ? 0 : 1, transition: phase === "out" ? "opacity 0.5s ease" : "none", overflow: "hidden" }}>
+      <style>{`
+        @keyframes splashRing { 0%{transform:scale(0.6);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1);opacity:1} }
+        @keyframes splashLogo { 0%{transform:scale(0.5) translateY(20px);opacity:0} 70%{transform:scale(1.06) translateY(-4px);opacity:1} 100%{transform:scale(1) translateY(0);opacity:1} }
+        @keyframes splashText { 0%{opacity:0;transform:translateY(16px)} 100%{opacity:1;transform:translateY(0)} }
+        @keyframes splashDot  { 0%,80%,100%{transform:scale(0)} 40%{transform:scale(1)} }
+        @keyframes floatBg { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-12px) scale(1.03)} }
+      `}</style>
+      <div style={{ position: "absolute", width: 320, height: 320, borderRadius: "50%", background: "rgba(26,107,232,0.18)", top: -80, right: -80, animation: "floatBg 6s ease-in-out infinite" }} />
+      <div style={{ position: "absolute", width: 240, height: 240, borderRadius: "50%", background: "rgba(0,196,140,0.10)", bottom: -60, left: -60, animation: "floatBg 8s ease-in-out infinite reverse" }} />
+      <div style={{ width: 160, height: 160, borderRadius: "50%", background: "rgba(26,107,232,0.15)", border: "1.5px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", animation: "splashRing 0.6s cubic-bezier(0.34,1.56,0.64,1) both" }}>
+        <div style={{ width: 128, height: 128, borderRadius: "50%", background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.18)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 100, height: 100, borderRadius: "50%", overflow: "hidden", border: "3px solid rgba(255,255,255,0.9)", boxShadow: "0 8px 40px rgba(26,107,232,0.6), 0 0 0 6px rgba(255,255,255,0.1)", animation: "splashLogo 0.7s 0.2s cubic-bezier(0.34,1.56,0.64,1) both" }}>
+            <img src={LOGO_URL} alt="Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        </div>
+      </div>
+      <div style={{ marginTop: 32, animation: "splashText 0.6s 0.5s ease both", textAlign: "center" }}>
+        <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: -0.5, color: "white", background: "linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 6 }}>LaundryGo</div>
+        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", fontWeight: 500, letterSpacing: 2.5, textTransform: "uppercase" }}>Phnom Penh · Cambodia</div>
+      </div>
+      <div style={{ marginTop: 14, fontSize: 14, color: "rgba(255,255,255,0.4)", animation: "splashText 0.6s 0.7s ease both" }}>Clean clothes, delivered fast 🧺</div>
+      <div style={{ position: "absolute", bottom: 60, display: "flex", gap: 8, animation: "splashText 0.5s 1s ease both" }}>
+        {[0,1,2].map(i => <div key={i} style={{ width: 7, height: 7, borderRadius: "50%", background: i === 0 ? C.accent : "rgba(255,255,255,0.3)", animation: `splashDot 1.2s ${i*0.2}s ease-in-out infinite` }} />)}
+      </div>
+      <div style={{ position: "absolute", bottom: 28, fontSize: 11, color: "rgba(255,255,255,0.25)", letterSpacing: 1, animation: "splashText 0.5s 1s ease both" }}>Powered by LaundryGo KH</div>
+    </div>
+  );
+};
+
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 export default function LaundryGoKH() {
+  const [splash, setSplash] = useState(true);
   const [tab, setTab] = useState("home");
   const [selectedShop, setSelectedShop] = useState(null);
   const [subScreen, setSubScreen] = useState(null);
@@ -958,10 +963,7 @@ export default function LaundryGoKH() {
     else if (subScreen === "detail") { setSubScreen(null); setSelectedShop(null); }
   };
 
-  const handleSelectShop = (shop) => {
-    setSelectedShop(shop);
-    setSubScreen("detail");
-  };
+  const handleSelectShop = (shop) => { setSelectedShop(shop); setSubScreen("detail"); };
 
   const renderScreen = () => {
     if (subScreen === "detail" && selectedShop) return <DetailScreen shop={selectedShop} onBack={handleBack} onBook={() => setSubScreen("booking")} />;
@@ -974,9 +976,9 @@ export default function LaundryGoKH() {
   };
 
   const navItems = [
-    { id: "home", icon: "home", label: "Home" },
-    { id: "search", icon: "search", label: "Explore" },
-    { id: "orders", icon: "orders", label: "Orders" },
+    { id: "home",    icon: "home",    label: "Home" },
+    { id: "search",  icon: "search",  label: "Explore" },
+    { id: "orders",  icon: "orders",  label: "Orders" },
     { id: "profile", icon: "profile", label: "Profile" },
   ];
 
@@ -989,16 +991,14 @@ export default function LaundryGoKH() {
         html, body, #root { height: 100%; margin: 0; font-family: 'DM Sans', sans-serif; background: #D5DAE8; }
         button { font-family: inherit; }
       `}</style>
-      <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.bg, height: "100vh", display: "flex", flexDirection: "column", width: "100%", maxWidth: 430, margin: "0 auto", overflow: "hidden" }}>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.bg, height: "100vh", display: "flex", flexDirection: "column", width: "100%", maxWidth: 430, margin: "0 auto", overflow: "hidden", position: "relative" }}>
+        {splash && <SplashScreen onDone={() => setSplash(false)} />}
         <div style={{ background: C.white, padding: "10px 22px 9px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12, fontWeight: 700, color: C.text, borderBottom: `1px solid ${C.border}`, flexShrink: 0 }}>
-          <span>9:41</span>
-          <span style={{ fontSize: 14 }}>📶 🔋</span>
+          <span>9:41</span><span style={{ fontSize: 14 }}>📶 🔋</span>
         </div>
-
         <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden" }}>
           {renderScreen()}
         </div>
-
         {!subScreen && (
           <div style={{ width: "100%", height: 66, background: C.white, borderTop: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-around", flexShrink: 0, boxShadow: "0 -4px 24px rgba(13,27,53,0.07)" }}>
             {navItems.map(item => {
