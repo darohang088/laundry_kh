@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
-const LOGO_URL = "src/assets/ic_clean24.png";
+const LOGO_URL =
+  "https://image2url.com/r2/default/images/1775051437513-e80fc1c1-3521-4dd6-92aa-0d8b5d4fee85.png";
 const SHOP_IMG = "src/assets/ic_slide_two.jpeg";
 const MAP_IMG =
   "https://media.wired.com/photos/59269cd37034dc5f91bec0f1/3:2/w_2560%2Cc_limit/GoogleMapTA.jpg";
