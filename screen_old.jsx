@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// const LOGO_URL = "https://instagram.fpnh22-1.fna.fbcdn.net/v/t51.2885-19/459622938_1389301475361097_5856190464083363544_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=instagram.fpnh22-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2gE_F3oPXoPinndqSC_im_zxT-7uXdMN0HRE0wW3ec2FO65NxJ8gh7V5AnQgTmFPC1U&_nc_ohc=T7oWLNy7TOoQ7kNvwFVFiub&_nc_gid=NT9dVA2Yuw4dA5b1n1204g&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Afxi2pXiEyBf6a3kyFX3Tr5XB4R6-iRLOrB0RChVC5D8ng&oe=69D1A6C9&_nc_sid=7a9f4b";
 const LOGO_URL = "src/assets/ic_clean24.png";
 const SHOP_IMG = "src/assets/ic_slide_two.jpeg";
 const MAP_IMG =
@@ -11,38 +12,22 @@ const bannerImages = [
   "src/assets/ic_slide_three.jpg",
 ];
 
-const C = {
-  primary: "#1A6BE8",
-  primaryLight: "#EBF2FF",
-  primaryDark: "#1355C0",
-  accent: "#00C48C",
-  accentLight: "#E6FAF4",
-  bg: "#F0F3FA",
-  white: "#FFFFFF",
-  text: "#0D1B35",
-  textSub: "#5C6E8A",
-  textMuted: "#A4ADBE",
-  border: "#E2E8F5",
-  red: "#FF4D4F",
-  card: "#FFFFFF",
-  surface: "#F7F9FE",
-};
-
-// ── BANNER SLIDER ──────────────────────────────────────────────────────────────
 const BannerSlider = () => {
   const [index, setIndex] = useState(0);
+
   useEffect(() => {
-    const interval = setInterval(
-      () => setIndex((p) => (p + 1) % bannerImages.length),
-      3000
-    );
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % bannerImages.length);
+    }, 3000);
+
     return () => clearInterval(interval);
   }, []);
+
   return (
     <div
       style={{
         position: "relative",
-        height: 180,
+        height: 200,
         borderRadius: 20,
         overflow: "hidden",
         border: "1.5px solid rgba(0,0,0,0.06)",
@@ -50,6 +35,7 @@ const BannerSlider = () => {
         background: "#fff",
       }}
     >
+      {/* SLIDE */}
       <div
         style={{
           display: "flex",
@@ -63,11 +49,12 @@ const BannerSlider = () => {
             key={i}
             style={{
               width: `${100 / bannerImages.length}%`,
-              height: 180,
+              height: 200,
               position: "relative",
               overflow: "hidden",
             }}
           >
+            {/* BLUR BACKGROUND */}
             <img
               src={img}
               alt=""
@@ -80,6 +67,8 @@ const BannerSlider = () => {
                 transform: "scale(1.1)",
               }}
             />
+
+            {/* MAIN IMAGE */}
             <img
               src={img}
               alt="banner"
@@ -93,6 +82,8 @@ const BannerSlider = () => {
           </div>
         ))}
       </div>
+
+      {/* GRADIENT OVERLAY */}
       <div
         style={{
           position: "absolute",
@@ -101,13 +92,15 @@ const BannerSlider = () => {
             "linear-gradient(90deg, rgba(0,0,0,0.15), transparent 60%)",
         }}
       />
+
+      {/* DOT INDICATOR */}
       <div
         style={{
           position: "absolute",
           bottom: 12,
           width: "100%",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "center", // ✅ fixed
           gap: 6,
         }}
       >
@@ -127,7 +120,6 @@ const BannerSlider = () => {
     </div>
   );
 };
-
 const BgImage = ({ height, style: s, children, overlayStyle, src }) => (
   <div
     style={{
@@ -146,6 +138,23 @@ const BgImage = ({ height, style: s, children, overlayStyle, src }) => (
     {children}
   </div>
 );
+
+const C = {
+  primary: "#1A6BE8",
+  primaryLight: "#EBF2FF",
+  primaryDark: "#1355C0",
+  accent: "#00C48C",
+  accentLight: "#E6FAF4",
+  bg: "#F0F3FA",
+  white: "#FFFFFF",
+  text: "#0D1B35",
+  textSub: "#5C6E8A",
+  textMuted: "#A4ADBE",
+  border: "#E2E8F5",
+  red: "#FF4D4F",
+  card: "#FFFFFF",
+  surface: "#F7F9FE",
+};
 
 const Icon = ({ name, size = 20, color = C.textSub }) => {
   const icons = {
@@ -212,6 +221,15 @@ const Icon = ({ name, size = 20, color = C.textSub }) => {
     star: (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="#FFB800">
         <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+      </svg>
+    ),
+    starO: (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+          stroke="#FFB800"
+          strokeWidth="1.5"
+        />
       </svg>
     ),
     wash: (
@@ -427,6 +445,17 @@ const Icon = ({ name, size = 20, color = C.textSub }) => {
         />
       </svg>
     ),
+    settings: (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" stroke={color} strokeWidth="1.8" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          stroke={color}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </svg>
+    ),
     mapPin: (
       <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
@@ -455,84 +484,6 @@ const Icon = ({ name, size = 20, color = C.textSub }) => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-        />
-      </svg>
-    ),
-    calendar: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-        <rect
-          x="3"
-          y="4"
-          width="18"
-          height="18"
-          rx="2"
-          stroke={color}
-          strokeWidth="1.8"
-        />
-        <path
-          d="M16 2V6M8 2V6M3 10H21"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
-    rider: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="5" r="3" stroke={color} strokeWidth="1.8" />
-        <path
-          d="M8 21H16M12 21V12M8 15C5.79 15 4 13.21 4 11V9H20V11C20 13.21 18.21 15 16 15"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-    moto: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-        <circle cx="5" cy="17" r="3" stroke={color} strokeWidth="1.8" />
-        <circle cx="19" cy="17" r="3" stroke={color} strokeWidth="1.8" />
-        <path
-          d="M5 17H3V13L6 8H14L16 11H19V14"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M14 8L16 11M9 8V13H16"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-    customer: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="8" r="4" stroke={color} strokeWidth="1.8" />
-        <path
-          d="M4 20C4 17 7.58 15 12 15C16.42 15 20 17 20 20"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
-    bag: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-        <path
-          d="M6 2L3 6V20C3 21.1 3.9 22 5 22H19C20.1 22 21 21.1 21 20V6L18 2H6Z"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M3 6H21M16 10C16 12.21 14.21 14 12 14C9.79 14 8 12.21 8 10"
-          stroke={color}
-          strokeWidth="1.8"
-          strokeLinecap="round"
         />
       </svg>
     ),
@@ -584,6 +535,7 @@ const PrimaryBtn = ({ label, onClick, disabled }) => (
   </button>
 );
 
+// ── STAR DISPLAY ──────────────────────────────────────────────────────────────
 const StarDisplay = ({ rating, size = 13, showCount = true, reviews }) => {
   const full = Math.floor(rating);
   const half = rating % 1 >= 0.5;
@@ -631,7 +583,7 @@ const StarDisplay = ({ rating, size = 13, showCount = true, reviews }) => {
   );
 };
 
-// ── DATA ───────────────────────────────────────────────────────────────────────
+// ── DATA ──────────────────────────────────────────────────────────────────────
 const shops = [
   {
     id: 1,
@@ -681,60 +633,63 @@ const shops = [
     location: "BKK2, Phnom Penh",
     tel: "011 222 333",
   },
-  {
-    id: 4,
-    name: "Clean24 - Boeng Kak",
-    nameKh: "ឃ្លីន24 បឹងកក់",
-    rating: 4.4,
-    reviews: 120,
-    distance: "2.5 km",
-    time: "30 min",
-    status: "open",
-    tags: ["24h", "Cheap"],
-    price: "$1.00",
-    services: ["Wash", "Dry"],
-    desc: "Affordable Clean24 branch in Boeng Kak area. Good for quick wash.",
-    location: "Boeng Kak, Phnom Penh",
-    tel: "015 888 999",
-  },
-  {
-    id: 5,
-    name: "Clean24 - Sen Sok",
-    nameKh: "ឃ្លីន24 សែនសុខ",
-    rating: 4.6,
-    reviews: 140,
-    distance: "4.0 km",
-    time: "35 min",
-    status: "open",
-    tags: ["24h", "Spacious"],
-    price: "$1.15",
-    services: ["Wash", "Dry", "Iron", "Pickup"],
-    desc: "Spacious branch in Sen Sok with many machines and parking available.",
-    location: "Sen Sok, Phnom Penh",
-    tel: "017 456 789",
-  },
-  {
-    id: 6,
-    name: "Clean24 - Chbar Ampov",
-    nameKh: "ឃ្លីន24 ច្បារអំពៅ",
-    rating: 4.3,
-    reviews: 90,
-    distance: "5.5 km",
-    time: "40 min",
-    status: "open",
-    tags: ["24h"],
-    price: "$0.95",
-    services: ["Wash", "Dry"],
-    desc: "Reliable 24h laundry service in Chbar Ampov area.",
-    location: "Chbar Ampov, Phnom Penh",
-    tel: "016 222 111",
-  },
+  // {
+  //   id: 4,
+  //   name: "Clean24 - Boeng Kak",
+  //   nameKh: "ឃ្លីន24 បឹងកក់",
+  //   rating: 4.4,
+  //   reviews: 120,
+  //   distance: "2.5 km",
+  //   time: "30 min",
+  //   status: "open",
+  //   tags: ["24h", "Cheap"],
+  //   price: "$1.00",
+  //   services: ["Wash", "Dry"],
+  //   desc: "Affordable Clean24 branch in Boeng Kak area. Good for quick wash.",
+  //   location: "Boeng Kak, Phnom Penh",
+  //   tel: "015 888 999",
+  // },
+  // {
+  //   id: 5,
+  //   name: "Clean24 - Sen Sok",
+  //   nameKh: "ឃ្លីន24 សែនសុខ",
+  //   rating: 4.6,
+  //   reviews: 140,
+  //   distance: "4.0 km",
+  //   time: "35 min",
+  //   status: "open",
+  //   tags: ["24h", "Spacious"],
+  //   price: "$1.15",
+  //   services: ["Wash", "Dry", "Iron", "Pickup"],
+  //   desc: "Spacious branch in Sen Sok with many machines and parking available.",
+  //   location: "Sen Sok, Phnom Penh",
+  //   tel: "017 456 789",
+  // },
+  // {
+  //   id: 6,
+  //   name: "Clean24 - Chbar Ampov",
+  //   nameKh: "ឃ្លីន24 ច្បារអំពៅ",
+  //   rating: 4.3,
+  //   reviews: 90,
+  //   distance: "5.5 km",
+  //   time: "40 min",
+  //   status: "open",
+  //   tags: ["24h"],
+  //   price: "$0.95",
+  //   services: ["Wash", "Dry"],
+  //   desc: "Reliable 24h laundry service in Chbar Ampov area.",
+  //   location: "Chbar Ampov, Phnom Penh",
+  //   tel: "016 222 111",
+  // },
 ];
 
+// ── CLEAN24 MAP PINS ──────────────────────────────────────────────────────────
+// Coords mapped to % positions on the MAP_IMG viewport
+// lat range ~11.52–11.64 → top 25%–80%, lng range ~104.85–104.93 → left 15%–90%
 const mapToPercent = (lat, lng) => {
   const latMin = 11.515,
-    latMax = 11.645,
-    lngMin = 104.845,
+    latMax = 11.645;
+  const lngMin = 104.845,
     lngMax = 104.935;
   const x = (((lng - lngMin) / (lngMax - lngMin)) * 75 + 12).toFixed(1) + "%";
   const y =
@@ -967,7 +922,7 @@ const orderHistory = [
   },
 ];
 
-// ── SHOP CARD ──────────────────────────────────────────────────────────────────
+// ── SHOP CARD ─────────────────────────────────────────────────────────────────
 const ShopCard = ({ shop, onClick }) => (
   <div
     onClick={onClick}
@@ -1151,177 +1106,7 @@ const ShopCard = ({ shop, onClick }) => (
   </div>
 );
 
-// ── ALL SHOPS SCREEN ───────────────────────────────────────────────────────────
-const AllShopsScreen = ({ onBack, onSelectShop }) => {
-  const [filter, setFilter] = useState("All");
-  const [sort, setSort] = useState("distance");
-  const filters = ["All", "24h", "Cheap", "Top Rated", "Pickup"];
-
-  const filtered = shops
-    .filter((s) => {
-      if (filter === "All") return true;
-      if (filter === "24h") return s.tags.includes("24h");
-      if (filter === "Cheap") return parseFloat(s.price.replace("$", "")) < 1.1;
-      if (filter === "Top Rated") return s.rating >= 4.6;
-      if (filter === "Pickup") return s.services.includes("Pickup");
-      return true;
-    })
-    .sort((a, b) => {
-      if (sort === "distance")
-        return parseFloat(a.distance) - parseFloat(b.distance);
-      if (sort === "rating") return b.rating - a.rating;
-      if (sort === "price")
-        return (
-          parseFloat(a.price.replace("$", "")) -
-          parseFloat(b.price.replace("$", ""))
-        );
-      return 0;
-    });
-
-  return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        background: C.bg,
-        overflow: "hidden",
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          background: C.white,
-          padding: "16px 18px 0",
-          borderBottom: `1px solid ${C.border}`,
-          flexShrink: 0,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            marginBottom: 14,
-          }}
-        >
-          <button
-            onClick={onBack}
-            style={{
-              width: 38,
-              height: 38,
-              borderRadius: 12,
-              background: C.bg,
-              border: `1px solid ${C.border}`,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Icon name="back" size={18} color={C.text} />
-          </button>
-          <div>
-            <div
-              style={{
-                fontSize: 18,
-                fontWeight: 800,
-                color: C.text,
-                letterSpacing: -0.3,
-              }}
-            >
-              All Shops
-            </div>
-            <div style={{ fontSize: 12, color: C.textSub }}>
-              {filtered.length} shops found near you
-            </div>
-          </div>
-          <div style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
-            {["distance", "rating", "price"].map((s) => (
-              <button
-                key={s}
-                onClick={() => setSort(s)}
-                style={{
-                  padding: "5px 10px",
-                  borderRadius: 10,
-                  border: "none",
-                  background: sort === s ? C.primary : C.surface,
-                  color: sort === s ? "white" : C.textSub,
-                  fontSize: 11,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  textTransform: "capitalize",
-                }}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        </div>
-        {/* Filter chips */}
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            overflowX: "auto",
-            scrollbarWidth: "none",
-            paddingBottom: 14,
-          }}
-        >
-          {filters.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              style={{
-                padding: "6px 16px",
-                borderRadius: 20,
-                border: "none",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-                cursor: "pointer",
-                background: filter === f ? C.primary : C.surface,
-                color: filter === f ? "white" : C.textSub,
-                fontSize: 12,
-                fontWeight: 700,
-                boxShadow:
-                  filter === f ? "0 3px 10px rgba(26,107,232,0.3)" : "none",
-              }}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-      </div>
-      {/* Shop list */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "16px 18px 28px" }}>
-        {filtered.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "60px 0",
-              color: C.textMuted,
-            }}
-          >
-            <div style={{ fontSize: 32, marginBottom: 10 }}>🔍</div>
-            <div style={{ fontSize: 15, fontWeight: 700 }}>No shops found</div>
-          </div>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {filtered.map((shop) => (
-              <ShopCard
-                key={shop.id}
-                shop={shop}
-                onClick={() => onSelectShop(shop)}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// ── MAP PIN ────────────────────────────────────────────────────────────────────
+// ── MAP PIN ───────────────────────────────────────────────────────────────────
 const MapPin = ({ pin, isActive, onClick }) => {
   const isOpen = pin.status === "open";
   const size = isActive ? 46 : 36;
@@ -1339,6 +1124,7 @@ const MapPin = ({ pin, isActive, onClick }) => {
         alignItems: "center",
       }}
     >
+      {/* Pulse */}
       {isOpen && isActive && (
         <div
           style={{
@@ -1355,6 +1141,7 @@ const MapPin = ({ pin, isActive, onClick }) => {
           }}
         />
       )}
+      {/* Pin body */}
       <div
         style={{
           width: size,
@@ -1382,12 +1169,13 @@ const MapPin = ({ pin, isActive, onClick }) => {
           position: "relative",
         }}
       >
+        {/* Logo */}
         <img
           src={LOGO_URL}
           alt="C24"
           style={{
-            width: isActive ? 32 : 22,
-            height: isActive ? 32 : 22,
+            width: isActive ? 32 : 24,
+            height: isActive ? 32 : 24,
             objectFit: "cover",
             borderRadius: "50%",
             filter: isOpen ? "none" : "grayscale(60%) opacity(0.55)",
@@ -1407,6 +1195,7 @@ const MapPin = ({ pin, isActive, onClick }) => {
           />
         )}
       </div>
+      {/* Price label on active */}
       {isActive && (
         <div
           style={{
@@ -1428,6 +1217,7 @@ const MapPin = ({ pin, isActive, onClick }) => {
           {pin.price}/kg
         </div>
       )}
+      {/* Open/closed dot */}
       <div
         style={{
           position: "absolute",
@@ -1445,7 +1235,7 @@ const MapPin = ({ pin, isActive, onClick }) => {
   );
 };
 
-// ── PIN POPUP ──────────────────────────────────────────────────────────────────
+// ── PIN POPUP ─────────────────────────────────────────────────────────────────
 const PinPopup = ({ pin, onClose, onViewShop }) => {
   const isOpen = pin.status === "open";
   const svcIcons = { Wash: "wash", Dry: "dry", Iron: "iron", Pickup: "pickup" };
@@ -1455,6 +1245,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
     Iron: "#FF8C00",
     Pickup: "#9B59B6",
   };
+
   return (
     <div
       style={{
@@ -1469,6 +1260,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
         animation: "slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)",
       }}
     >
+      {/* Drag handle */}
       <div
         style={{
           display: "flex",
@@ -1486,6 +1278,8 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
           }}
         />
       </div>
+
+      {/* Close */}
       <button
         onClick={onClose}
         style={{
@@ -1505,17 +1299,22 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
       >
         <Icon name="close" size={14} color={C.textSub} />
       </button>
+
       <div style={{ padding: "4px 18px 24px" }}>
-        {/* Header — added paddingRight to avoid overlap with close btn */}
+        {/* Header */}
         <div
           style={{
             display: "flex",
             alignItems: "flex-start",
             gap: 12,
             marginBottom: 12,
-            paddingRight: 44,
           }}
         >
+          {/* Logo thumb */}
+          {/* <div style={{ width: 52, height: 52, borderRadius: 15, overflow: "hidden", border: `2px solid ${C.border}`, flexShrink: 0 }}>
+            <img src={LOGO_URL} alt="logo" style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              onError={e => { e.target.style.background = C.primaryLight; e.target.style.display = "none"; }} />
+          </div> */}
           <div style={{ flex: 1, minWidth: 0 }}>
             <div
               style={{
@@ -1538,6 +1337,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             >
               {pin.nameKh}
             </div>
+            {/* Stars */}
             <div style={{ marginTop: 5 }}>
               <StarDisplay
                 rating={pin.rating}
@@ -1553,7 +1353,8 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             <div style={{ fontSize: 11, color: C.textMuted }}>/kg</div>
           </div>
         </div>
-        {/* Status row */}
+
+        {/* Status + type + distance row */}
         <div
           style={{
             display: "flex",
@@ -1618,21 +1419,22 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             </span>
           </div>
         </div>
+
         {/* Services */}
-        <div style={{ marginBottom: 14 }}>
+        <div style={{ marginBottom: 16 }}>
           <div
             style={{
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 700,
               color: C.textMuted,
               letterSpacing: 0.5,
               textTransform: "uppercase",
-              marginBottom: 8,
+              marginBottom: 9,
             }}
           >
             Services
           </div>
-          <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {pin.services.map((s) => (
               <div
                 key={s}
@@ -1655,13 +1457,14 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             ))}
           </div>
         </div>
-        {/* Stats row */}
+
+        {/* Review count bar */}
         <div
           style={{
             background: C.surface,
             borderRadius: 12,
             padding: "10px 14px",
-            marginBottom: 14,
+            marginBottom: 16,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -1669,7 +1472,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: C.primary }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: C.primary }}>
               {pin.rating}
             </div>
             <div>
@@ -1705,8 +1508,10 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             <div style={{ fontSize: 11, color: C.textMuted }}>Status</div>
           </div>
         </div>
-        {/* CTA */}
+
+        {/* CTA buttons */}
         <div style={{ display: "flex", gap: 10 }}>
+          {/* Google Maps navigation */}
           <a
             href={pin.mapUrl}
             target="_blank"
@@ -1735,6 +1540,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
               Directions
             </button>
           </a>
+          {/* Book / View */}
           <button
             onClick={() => onViewShop(pin)}
             style={{
@@ -1763,14 +1569,16 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
   );
 };
 
-// ── EXPLORE SCREEN ─────────────────────────────────────────────────────────────
+// ── EXPLORE SCREEN ────────────────────────────────────────────────────────────
 const ExploreScreen = ({ onSelectShop }) => {
   const [activePin, setActivePin] = useState(null);
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = ["All", "Open", "Top Rated", "Cheap", "Nearby"];
+
   const activePinData = activePin
     ? clean24Pins.find((p) => p.id === activePin)
     : null;
+
   const filtered = clean24Pins.filter((p) => {
     if (activeFilter === "Open") return p.status === "open";
     if (activeFilter === "Top Rated") return p.rating >= 4.9;
@@ -1778,8 +1586,10 @@ const ExploreScreen = ({ onSelectShop }) => {
       return parseFloat(p.price.replace("$", "")) <= 1.0;
     return true;
   });
+
   const handleViewShop = (pinData) => {
-    onSelectShop({
+    // Build a shop-compatible object from pin data
+    const shopObj = {
       name: pinData.name,
       nameKh: pinData.nameKh,
       rating: pinData.rating,
@@ -1791,8 +1601,10 @@ const ExploreScreen = ({ onSelectShop }) => {
       price: pinData.price,
       services: pinData.services,
       desc: `${pinData.name} is a trusted Clean24 franchise laundry in Phnom Penh offering quality wash & fold services.`,
-    });
+    };
+    onSelectShop(shopObj);
   };
+
   return (
     <div
       style={{
@@ -1805,11 +1617,12 @@ const ExploreScreen = ({ onSelectShop }) => {
       }}
     >
       <style>{`
-        @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5}50%{transform:translate(-50%,-50%) scale(2.2);opacity:0}}
-        @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
-        @keyframes pinDrop{from{transform:translateY(-12px);opacity:0}to{transform:translateY(0);opacity:1}}
+        @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5} 50%{transform:translate(-50%,-50%) scale(2.2);opacity:0} }
+        @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+        @keyframes pinDrop { from{transform:translateY(-12px);opacity:0} to{transform:translateY(0);opacity:1} }
       `}</style>
-      {/* Map */}
+
+      {/* Full-screen map */}
       <div
         style={{ position: "absolute", inset: 0, overflow: "hidden" }}
         onClick={() => setActivePin(null)}
@@ -1831,6 +1644,8 @@ const ExploreScreen = ({ onSelectShop }) => {
             background: "rgba(13,27,53,0.04)",
           }}
         />
+
+        {/* Clean24 Pins */}
         {filtered.map((pin, idx) => (
           <div
             key={pin.id}
@@ -1850,6 +1665,7 @@ const ExploreScreen = ({ onSelectShop }) => {
             />
           </div>
         ))}
+
         {/* User dot */}
         <div
           style={{
@@ -1886,7 +1702,8 @@ const ExploreScreen = ({ onSelectShop }) => {
           />
         </div>
       </div>
-      {/* Top bar — fixed layout, smaller logo */}
+
+      {/* Top search + filters */}
       <div
         style={{
           position: "absolute",
@@ -1894,7 +1711,7 @@ const ExploreScreen = ({ onSelectShop }) => {
           left: 0,
           right: 0,
           zIndex: 20,
-          padding: "12px 14px 0",
+          padding: "14px 14px 0",
         }}
       >
         <div
@@ -1910,37 +1727,23 @@ const ExploreScreen = ({ onSelectShop }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 9,
-              padding: "10px 14px",
+              gap: 10,
+              padding: "12px 14px",
             }}
           >
-            {/* Smaller logo — 22px */}
-            <div
+            <img
+              src={LOGO_URL}
+              alt="c24"
               style={{
-                width: 22,
-                height: 22,
-                borderRadius: 7,
-                overflow: "hidden",
-                flexShrink: 0,
-                background: C.primaryLight,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                width: 28,
+                height: 28,
+                borderRadius: 8,
+                objectFit: "cover",
               }}
-            >
-              <img
-                src={LOGO_URL}
-                alt="c24"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  e.target.parentNode.innerHTML =
-                    "<span style='font-size:11px;font-weight:800;color:#1A6BE8'>C</span>";
-                }}
-              />
-            </div>
+              onError={(e) => (e.target.style.display = "none")}
+            />
             <span
-              style={{ fontSize: 13, fontWeight: 700, color: C.text, flex: 1 }}
+              style={{ fontSize: 14, fontWeight: 700, color: C.text, flex: 1 }}
             >
               Clean24 Laundry – Phnom Penh
             </span>
@@ -1952,7 +1755,6 @@ const ExploreScreen = ({ onSelectShop }) => {
                 background: C.accentLight,
                 borderRadius: 20,
                 padding: "3px 10px",
-                flexShrink: 0,
               }}
             >
               <div
@@ -1974,7 +1776,7 @@ const ExploreScreen = ({ onSelectShop }) => {
               gap: 7,
               overflowX: "auto",
               scrollbarWidth: "none",
-              padding: "0 14px 10px",
+              padding: "0 14px 12px",
             }}
           >
             {filters.map((f) => (
@@ -2004,12 +1806,13 @@ const ExploreScreen = ({ onSelectShop }) => {
           </div>
         </div>
       </div>
-      {/* Controls */}
+
+      {/* Bottom right controls */}
       <div
         style={{
           position: "absolute",
           right: 14,
-          bottom: activePinData ? 340 : 16,
+          bottom: activePinData ? 320 : 16,
           display: "flex",
           flexDirection: "column",
           gap: 8,
@@ -2037,11 +1840,13 @@ const ExploreScreen = ({ onSelectShop }) => {
           </button>
         ))}
       </div>
+
+      {/* Shop count */}
       <div
         style={{
           position: "absolute",
           left: 14,
-          bottom: activePinData ? 340 : 16,
+          bottom: activePinData ? 320 : 16,
           background: "rgba(255,255,255,0.97)",
           borderRadius: 14,
           padding: "8px 14px",
@@ -2054,30 +1859,18 @@ const ExploreScreen = ({ onSelectShop }) => {
           zIndex: 20,
         }}
       >
-        <div
-          style={{
-            width: 18,
-            height: 18,
-            borderRadius: 5,
-            overflow: "hidden",
-            background: C.primaryLight,
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <img
-            src={LOGO_URL}
-            alt=""
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            onError={(e) => (e.target.style.display = "none")}
-          />
-        </div>
+        <img
+          src={LOGO_URL}
+          alt=""
+          style={{ width: 20, height: 20, borderRadius: 6, objectFit: "cover" }}
+          onError={(e) => (e.target.style.display = "none")}
+        />
         <span style={{ fontSize: 12, fontWeight: 700, color: C.text }}>
           {filtered.length} Shops Found
         </span>
       </div>
+
+      {/* Popup */}
       {activePinData && (
         <PinPopup
           pin={activePinData}
@@ -2089,135 +1882,309 @@ const ExploreScreen = ({ onSelectShop }) => {
   );
 };
 
-// ── HOME SCREEN ────────────────────────────────────────────────────────────────
-const HomeScreen = ({ onSelectShop, onSeeAll }) => (
-  <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
-    <div
-      style={{
-        background: C.white,
-        padding: "18px 20px 20px",
-        borderBottom: `1px solid ${C.border}`,
-      }}
-    >
+// ── HOME ──────────────────────────────────────────────────────────────────────
+const HomeScreen = ({ onSelectShop }) => {
+  // const [chip, setChip] = useState("All");
+  return (
+    <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          marginBottom: 16,
+          background: C.white,
+          padding: "18px 20px 20px",
+          borderBottom: `1px solid ${C.border}`,
         }}
       >
-        <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-              marginBottom: 5,
-            }}
-          >
-            <Icon name="location" size={13} color={C.primary} />
-            <span style={{ fontSize: 12, color: C.primary, fontWeight: 700 }}>
-              Phnom Penh, BKK1
-            </span>
-            <Icon name="chevron" size={12} color={C.primary} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: 16,
+          }}
+        >
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+                marginBottom: 5,
+              }}
+            >
+              <Icon name="location" size={13} color={C.primary} />
+              <span style={{ fontSize: 12, color: C.primary, fontWeight: 700 }}>
+                Phnom Penh, BKK1
+              </span>
+              <Icon name="chevron" size={12} color={C.primary} />
+            </div>
+            <div
+              style={{
+                fontSize: 22,
+                fontWeight: 800,
+                color: C.text,
+                letterSpacing: -0.5,
+                lineHeight: 1.2,
+              }}
+            >
+              Good morning, Daro 👋
+            </div>
+            <div style={{ fontSize: 13, color: C.textSub, marginTop: 3 }}>
+              Find a trusted laundry near you
+            </div>
           </div>
-          <div
-            style={{
-              fontSize: 22,
-              fontWeight: 800,
-              color: C.text,
-              letterSpacing: -0.5,
-              lineHeight: 1.2,
-            }}
-          >
-            Good morning, Daro 👋
-          </div>
-          <div style={{ fontSize: 13, color: C.textSub, marginTop: 3 }}>
-            Find a trusted laundry near you
+          <div style={{ position: "relative" }}>
+            <button
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 14,
+                background: C.primaryLight,
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Icon name="notification" size={20} color={C.primary} />
+            </button>
+            <div
+              style={{
+                position: "absolute",
+                top: 9,
+                right: 9,
+                width: 8,
+                height: 8,
+                background: C.red,
+                borderRadius: "50%",
+                border: "2px solid white",
+              }}
+            />
           </div>
         </div>
-        <div style={{ position: "relative" }}>
-          <button
+        {/* <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            background: C.surface,
+            borderRadius: 14,
+            padding: "12px 16px",
+            border: `1.5px solid ${C.border}`,
+          }}
+        >
+          <Icon name="search" size={17} color={C.textMuted} />
+          <span style={{ fontSize: 14, color: C.textMuted, flex: 1 }}>
+            Search shops, services...
+          </span>
+          <div
             style={{
-              width: 44,
-              height: 44,
-              borderRadius: 14,
-              background: C.primaryLight,
-              border: "none",
-              cursor: "pointer",
+              width: 32,
+              height: 32,
+              borderRadius: 10,
+              background: C.primary,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Icon name="notification" size={20} color={C.primary} />
-          </button>
-          <div
-            style={{
-              position: "absolute",
-              top: 9,
-              right: 9,
-              width: 8,
-              height: 8,
-              background: C.red,
-              borderRadius: "50%",
-              border: "2px solid white",
+            <svg width={15} height={15} viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 6H20M7 12H17M10 18H14"
+                stroke="white"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+        </div> */}
+      </div>
+
+      <div style={{ padding: "20px 18px 28px" }}>
+        {/* <div style={{ marginBottom: 22 }}>
+          <BgImage
+            height={118}
+            style={{ borderRadius: 18 }}
+            overlayStyle={{
+              background:
+                "linear-gradient(110deg, rgba(19,85,192,0.9) 0%, rgba(26,107,232,0.65) 55%, transparent 100%)",
             }}
-          />
+          >
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                padding: "18px 20px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                zIndex: 1,
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 5,
+                  background: "rgba(255,255,255,0.18)",
+                  borderRadius: 20,
+                  padding: "3px 10px",
+                  width: "fit-content",
+                  marginBottom: 8,
+                }}
+              >
+                <span style={{ fontSize: 12 }}>⚡</span>
+                <span
+                  style={{
+                    fontSize: 11,
+                    color: "white",
+                    fontWeight: 700,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  LIMITED OFFER
+                </span>
+              </div>
+              <div
+                style={{
+                  fontSize: 19,
+                  fontWeight: 800,
+                  color: "white",
+                  letterSpacing: -0.3,
+                }}
+              >
+                First Order 30% OFF
+              </div>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "rgba(255,255,255,0.8)",
+                  marginTop: 3,
+                }}
+              >
+                Code <span style={{ fontWeight: 800 }}>WASHGO30</span> · Exp Apr
+                5
+              </div>
+            </div>
+          </BgImage>
+        </div> */}
+        <div style={{ marginBottom: 22 }}>
+          <BannerSlider />
         </div>
-      </div>
-    </div>
-    <div style={{ padding: "20px 18px 28px" }}>
-      <div style={{ marginBottom: 22 }}>
-        <BannerSlider />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 14,
-        }}
-      >
+
+        {/* <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gap: 10,
+            marginBottom: 22,
+          }}
+        >
+          {[
+            { emoji: "⚡", label: "Fastest", val: "25 min" },
+            { emoji: "💰", label: "From", val: "$0.90/kg" },
+            { emoji: "🏪", label: "Nearby", val: "13 Shops" },
+          ].map((s) => (
+            <div
+              key={s.label}
+              style={{
+                background: C.white,
+                borderRadius: 14,
+                padding: "12px 8px",
+                textAlign: "center",
+                border: `1px solid ${C.border}`,
+                boxShadow: "0 1px 8px rgba(13,27,53,0.04)",
+              }}
+            >
+              <div style={{ fontSize: 20, marginBottom: 4 }}>{s.emoji}</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: C.text }}>
+                {s.val}
+              </div>
+              <div
+                style={{
+                  fontSize: 10,
+                  color: C.textMuted,
+                  marginTop: 1,
+                  fontWeight: 500,
+                }}
+              >
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div> */}
+
+        {/* <div
+          style={{
+            display: "flex",
+            gap: 8,
+            overflowX: "auto",
+            scrollbarWidth: "none",
+            marginBottom: 18,
+            paddingBottom: 2,
+          }}
+        >
+          {["All", "24h", "Cheap", "Top Rated", "Nearby"].map((c) => (
+            <button
+              key={c}
+              onClick={() => setChip(c)}
+              style={{
+                padding: "7px 16px",
+                borderRadius: 20,
+                border: chip === c ? "none" : `1.5px solid ${C.border}`,
+                background: chip === c ? C.primary : C.white,
+                color: chip === c ? C.white : C.textSub,
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                boxShadow:
+                  chip === c ? "0 4px 12px rgba(26,107,232,0.28)" : "none",
+                flexShrink: 0,
+              }}
+            >
+              {c}
+            </button>
+          ))}
+        </div> */}
+
         <div
           style={{
-            fontSize: 16,
-            fontWeight: 800,
-            color: C.text,
-            letterSpacing: -0.3,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 14,
           }}
         >
-          Nearby Shops
+          <div
+            style={{
+              fontSize: 16,
+              fontWeight: 800,
+              color: C.text,
+              letterSpacing: -0.3,
+            }}
+          >
+            Nearby Shops
+          </div>
+          <div style={{ fontSize: 13, color: C.primary, fontWeight: 700 }}>
+            See all →
+          </div>
         </div>
-        <button
-          onClick={onSeeAll}
-          style={{
-            fontSize: 13,
-            color: C.primary,
-            fontWeight: 700,
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          See all →
-        </button>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        {shops.slice(0, 4).map((shop) => (
-          <ShopCard
-            key={shop.id}
-            shop={shop}
-            onClick={() => onSelectShop(shop)}
-          />
-        ))}
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {shops.map((shop) => (
+            <ShopCard
+              key={shop.id}
+              shop={shop}
+              onClick={() => onSelectShop(shop)}
+            />
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-// ── DETAIL SCREEN ──────────────────────────────────────────────────────────────
+// ── DETAIL ────────────────────────────────────────────────────────────────────
 const DetailScreen = ({ shop, onBack, onBook }) => {
   const svcIcons = { Wash: "wash", Dry: "dry", Iron: "iron", Pickup: "pickup" };
   const svcColors = {
@@ -2263,24 +2230,36 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
             <Icon name="back" size={18} color={C.text} />
           </button>
           <div style={{ display: "flex", gap: 8 }}>
-            {["heart", "share"].map((i) => (
-              <button
-                key={i}
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 13,
-                  background: "rgba(255,255,255,0.9)",
-                  border: "none",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Icon name={i} size={17} color={C.text} />
-              </button>
-            ))}
+            <button
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 13,
+                background: "rgba(255,255,255,0.9)",
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Icon name="heart" size={17} color={C.text} />
+            </button>
+            <button
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 13,
+                background: "rgba(255,255,255,0.9)",
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Icon name="share" size={17} color={C.text} />
+            </button>
           </div>
         </div>
         <div
@@ -2325,6 +2304,7 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
           </div>
         </div>
       </BgImage>
+
       <div
         style={{
           background: C.white,
@@ -2370,6 +2350,7 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
           </span>
         </div>
       </div>
+
       <div style={{ padding: "18px 18px 28px" }}>
         <div style={{ marginBottom: 20 }}>
           <div
@@ -2490,7 +2471,7 @@ const DetailScreen = ({ shop, onBack, onBook }) => {
   );
 };
 
-// ── BOOKING SCREEN ─────────────────────────────────────────────────────────────
+// ── BOOKING ───────────────────────────────────────────────────────────────────
 const BookingScreen = ({ shop, onBack, onConfirm }) => {
   const [services, setServices] = useState({
     Wash: true,
@@ -2500,10 +2481,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
   });
   const [time, setTime] = useState("now");
   const [kg, setKg] = useState(3);
-  // Schedule picker state
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedSlot, setSelectedSlot] = useState(null);
-
   const svcPrice = { Wash: 1.2, Dry: 0.8, Iron: 1.0, Pickup: 0.5 };
   const svcColors = {
     Wash: "#1A6BE8",
@@ -2514,37 +2491,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
   const svcIcons = { Wash: "wash", Dry: "dry", Iron: "iron", Pickup: "pickup" };
   const selected = Object.keys(services).filter((k) => services[k]);
   const total = selected.reduce((s, k) => s + svcPrice[k] * kg, 0).toFixed(2);
-
-  // Generate next 5 days
-  const days = Array.from({ length: 5 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return {
-      label:
-        i === 0
-          ? "Today"
-          : i === 1
-          ? "Tomorrow"
-          : d.toLocaleDateString("en-US", { weekday: "short" }),
-      sub: d.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-      val: d.toDateString(),
-    };
-  });
-  const slots = [
-    "8:00 AM",
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
-    "5:00 PM",
-  ];
-
-  const canConfirm =
-    selected.length > 0 &&
-    (time === "now" || (time === "schedule" && selectedDate && selectedSlot));
-
   return (
     <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
       <div
@@ -2581,7 +2527,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
         </div>
       </div>
       <div style={{ padding: "18px 18px 28px" }}>
-        {/* Services */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -2658,7 +2603,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
               </div>
             ))}
         </div>
-        {/* Weight */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -2738,7 +2682,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             </button>
           </div>
         </div>
-        {/* Pickup Time */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -2750,7 +2693,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
           >
             Pickup Time
           </div>
-          <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+          <div style={{ display: "flex", gap: 10 }}>
             {[
               { val: "now", emoji: "⚡", label: "Right Now", sub: "~30 min" },
               {
@@ -2791,209 +2734,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
               </div>
             ))}
           </div>
-          {/* Right Now info */}
-          {time === "now" && (
-            <div
-              style={{
-                background: "#E6FAF4",
-                borderRadius: 12,
-                padding: "12px 14px",
-                border: "1px solid #00C48C30",
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 10,
-              }}
-            >
-              <div style={{ fontSize: 20, flexShrink: 0 }}>🛵</div>
-              <div>
-                <div
-                  style={{ fontSize: 13, fontWeight: 700, color: "#00A878" }}
-                >
-                  Rider will come to you
-                </div>
-                <div
-                  style={{
-                    fontSize: 12,
-                    color: C.textSub,
-                    marginTop: 2,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  A Clean24 rider will arrive at your address within ~30 minutes
-                  to collect your laundry. Make sure your clothes are ready in a
-                  bag!
-                </div>
-              </div>
-            </div>
-          )}
-          {/* Schedule picker */}
-          {time === "schedule" && (
-            <div
-              style={{
-                background: C.white,
-                borderRadius: 16,
-                padding: "14px 16px",
-                border: `1px solid ${C.border}`,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: C.textMuted,
-                  textTransform: "uppercase",
-                  letterSpacing: 0.5,
-                  marginBottom: 10,
-                }}
-              >
-                Select Date
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 8,
-                  overflowX: "auto",
-                  scrollbarWidth: "none",
-                  paddingBottom: 4,
-                }}
-              >
-                {days.map((d) => (
-                  <div
-                    key={d.val}
-                    onClick={() => setSelectedDate(d.val)}
-                    style={{
-                      flexShrink: 0,
-                      textAlign: "center",
-                      padding: "10px 14px",
-                      borderRadius: 14,
-                      border: `1.5px solid ${
-                        selectedDate === d.val ? C.primary : C.border
-                      }`,
-                      background:
-                        selectedDate === d.val ? C.primaryLight : C.surface,
-                      cursor: "pointer",
-                      minWidth: 62,
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: selectedDate === d.val ? C.primary : C.textSub,
-                      }}
-                    >
-                      {d.label}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 13,
-                        fontWeight: 800,
-                        color: selectedDate === d.val ? C.primary : C.text,
-                        marginTop: 2,
-                      }}
-                    >
-                      {d.sub.split(" ")[1]}
-                    </div>
-                    <div style={{ fontSize: 10, color: C.textMuted }}>
-                      {d.sub.split(" ")[0]}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              {selectedDate && (
-                <>
-                  <div
-                    style={{
-                      height: 1,
-                      background: C.border,
-                      margin: "14px 0 12px",
-                    }}
-                  />
-                  <div
-                    style={{
-                      fontSize: 12,
-                      fontWeight: 700,
-                      color: C.textMuted,
-                      textTransform: "uppercase",
-                      letterSpacing: 0.5,
-                      marginBottom: 10,
-                    }}
-                  >
-                    Select Time Slot
-                  </div>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      gap: 8,
-                    }}
-                  >
-                    {slots.map((slot) => (
-                      <div
-                        key={slot}
-                        onClick={() => setSelectedSlot(slot)}
-                        style={{
-                          padding: "10px",
-                          textAlign: "center",
-                          borderRadius: 12,
-                          border: `1.5px solid ${
-                            selectedSlot === slot ? C.primary : C.border
-                          }`,
-                          background:
-                            selectedSlot === slot ? C.primaryLight : C.surface,
-                          cursor: "pointer",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 700,
-                            color: selectedSlot === slot ? C.primary : C.text,
-                          }}
-                        >
-                          {slot}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  {selectedDate && selectedSlot && (
-                    <div
-                      style={{
-                        marginTop: 12,
-                        background: "#E6FAF4",
-                        borderRadius: 10,
-                        padding: "10px 12px",
-                        border: "1px solid #00C48C30",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                      }}
-                    >
-                      <span style={{ fontSize: 16 }}>✅</span>
-                      <div>
-                        <div
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: "#00A878",
-                          }}
-                        >
-                          Pickup scheduled!
-                        </div>
-                        <div style={{ fontSize: 11, color: C.textSub }}>
-                          {days.find((d) => d.val === selectedDate)?.label},{" "}
-                          {days.find((d) => d.val === selectedDate)?.sub} at{" "}
-                          {selectedSlot}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          )}
         </div>
-        {/* Address */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -3041,7 +2782,6 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             <Icon name="chevron" size={16} color={C.textMuted} />
           </div>
         </div>
-        {/* Price summary */}
         <div
           style={{
             background: C.white,
@@ -3118,22 +2858,16 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
           </div>
         </div>
         <PrimaryBtn
-          label={
-            canConfirm
-              ? "Confirm Booking"
-              : selected.length === 0
-              ? "Select a Service"
-              : "Pick Date & Time"
-          }
-          onClick={canConfirm ? onConfirm : undefined}
-          disabled={!canConfirm}
+          label="Confirm Booking"
+          onClick={onConfirm}
+          disabled={selected.length === 0}
         />
       </div>
     </div>
   );
 };
 
-// ── TRACKING SCREEN ────────────────────────────────────────────────────────────
+// ── TRACKING ──────────────────────────────────────────────────────────────────
 const TrackingScreen = ({ onBack }) => {
   const steps = [
     { label: "Order Placed", sub: "09:00 AM", done: true },
@@ -3416,7 +3150,7 @@ const TrackingScreen = ({ onBack }) => {
   );
 };
 
-// ── HISTORY SCREEN ─────────────────────────────────────────────────────────────
+// ── ORDERS ────────────────────────────────────────────────────────────────────
 const HistoryScreen = ({ onTrack }) => (
   <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
     <div
@@ -3660,7 +3394,7 @@ const HistoryScreen = ({ onTrack }) => (
   </div>
 );
 
-// ── PROFILE SCREEN ─────────────────────────────────────────────────────────────
+// ── PROFILE ───────────────────────────────────────────────────────────────────
 const ProfileScreen = () => (
   <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
     <BgImage
@@ -3933,755 +3667,7 @@ const ProfileScreen = () => (
   </div>
 );
 
-// ── RIDER DASHBOARD ────────────────────────────────────────────────────────────
-const RiderDashboard = () => {
-  const [activeTab, setActiveTab] = useState("pending");
-  const [accepted, setAccepted] = useState([]);
-
-  const pendingOrders = [
-    {
-      id: "LG-2044",
-      customer: "Sokha Lim",
-      address: "BKK1, Street 51, Phnom Penh",
-      services: "Wash + Dry · 4 kg",
-      earning: "$1.50",
-      time: "Now",
-      distance: "0.8 km",
-      phone: "012 111 222",
-    },
-    {
-      id: "LG-2043",
-      customer: "Chenda Ros",
-      address: "Toul Kork, Street 289, Phnom Penh",
-      services: "Wash + Pickup · 3 kg",
-      earning: "$1.20",
-      time: "10:30 AM",
-      distance: "1.4 km",
-      phone: "011 333 444",
-    },
-    {
-      id: "LG-2042",
-      customer: "Virak Chan",
-      address: "Daun Penh, Street 19",
-      services: "Wash + Iron · 5 kg",
-      earning: "$1.80",
-      time: "11:00 AM",
-      distance: "2.1 km",
-      phone: "015 555 666",
-    },
-  ];
-  const completedOrders = [
-    { id: "LG-2040", customer: "Bopha Keo", earning: "$1.50", date: "Mar 31" },
-    { id: "LG-2039", customer: "Dara Noun", earning: "$1.20", date: "Mar 31" },
-    {
-      id: "LG-2037",
-      customer: "Sophea Mony",
-      earning: "$2.00",
-      date: "Mar 30",
-    },
-  ];
-
-  const handleAccept = (id) =>
-    setAccepted((p) => (p.includes(id) ? p : [...p, id]));
-
-  return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        background: C.bg,
-        overflow: "hidden",
-      }}
-    >
-      {/* Rider header */}
-      <div
-        style={{
-          background: `linear-gradient(135deg, ${C.primary}, ${C.primaryDark})`,
-          padding: "20px 20px 0",
-          flexShrink: 0,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 16,
-          }}
-        >
-          <div>
-            <div
-              style={{
-                fontSize: 13,
-                color: "rgba(255,255,255,0.7)",
-                fontWeight: 600,
-              }}
-            >
-              Rider Mode 🛵
-            </div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: "white" }}>
-              Hey, Daro!
-            </div>
-          </div>
-          <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)" }}>
-              Today's Earning
-            </div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: "white" }}>
-              $4.70
-            </div>
-          </div>
-        </div>
-        {/* Stats */}
-        <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-          {[
-            { val: "3", label: "Pending" },
-            { val: "2", label: "Completed" },
-            { val: "4.9", label: "Rating" },
-          ].map((s) => (
-            <div
-              key={s.label}
-              style={{
-                flex: 1,
-                background: "rgba(255,255,255,0.15)",
-                borderRadius: 12,
-                padding: "10px",
-                textAlign: "center",
-              }}
-            >
-              <div style={{ fontSize: 18, fontWeight: 800, color: "white" }}>
-                {s.val}
-              </div>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.7)",
-                  marginTop: 2,
-                }}
-              >
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* Tabs */}
-        <div
-          style={{
-            display: "flex",
-            background: "rgba(255,255,255,0.12)",
-            borderRadius: "12px 12px 0 0",
-            overflow: "hidden",
-          }}
-        >
-          {[
-            { id: "pending", label: "Pending Pickups" },
-            { id: "completed", label: "Completed" },
-          ].map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setActiveTab(t.id)}
-              style={{
-                flex: 1,
-                padding: "11px",
-                border: "none",
-                background:
-                  activeTab === t.id ? "rgba(255,255,255,0.95)" : "transparent",
-                color:
-                  activeTab === t.id ? C.primary : "rgba(255,255,255,0.75)",
-                fontSize: 13,
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
-      {/* Content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "14px 16px 28px" }}>
-        {activeTab === "pending"
-          ? pendingOrders.map((order) => {
-              const isAccepted = accepted.includes(order.id);
-              return (
-                <div
-                  key={order.id}
-                  style={{
-                    background: C.white,
-                    borderRadius: 18,
-                    marginBottom: 12,
-                    border: `1.5px solid ${
-                      isAccepted ? C.accent + "50" : C.border
-                    }`,
-                    overflow: "hidden",
-                    boxShadow: "0 2px 12px rgba(13,27,53,0.07)",
-                  }}
-                >
-                  {isAccepted && (
-                    <div
-                      style={{
-                        background: C.accentLight,
-                        padding: "7px 14px",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 6,
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: "50%",
-                          background: C.accent,
-                        }}
-                      />
-                      <span
-                        style={{
-                          fontSize: 11,
-                          fontWeight: 700,
-                          color: C.accent,
-                        }}
-                      >
-                        Accepted · Navigate to customer
-                      </span>
-                    </div>
-                  )}
-                  <div style={{ padding: "14px 16px" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: 10,
-                      }}
-                    >
-                      <div>
-                        <div
-                          style={{
-                            fontSize: 15,
-                            fontWeight: 800,
-                            color: C.text,
-                          }}
-                        >
-                          {order.customer}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 11,
-                            color: C.textMuted,
-                            marginTop: 2,
-                          }}
-                        >
-                          #{order.id}
-                        </div>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div
-                          style={{
-                            fontSize: 16,
-                            fontWeight: 800,
-                            color: C.accent,
-                          }}
-                        >
-                          {order.earning}
-                        </div>
-                        <div style={{ fontSize: 10, color: C.textMuted }}>
-                          earning
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: 8,
-                        marginBottom: 8,
-                        background: C.surface,
-                        borderRadius: 10,
-                        padding: "9px 12px",
-                      }}
-                    >
-                      <Icon name="location" size={14} color={C.primary} />
-                      <div>
-                        <div
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 600,
-                            color: C.text,
-                          }}
-                        >
-                          {order.address}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 11,
-                            color: C.textMuted,
-                            marginTop: 2,
-                          }}
-                        >
-                          {order.services}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: 8,
-                        alignItems: "center",
-                        marginBottom: 12,
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                          background: C.primaryLight,
-                          borderRadius: 8,
-                          padding: "4px 9px",
-                        }}
-                      >
-                        <Icon name="time" size={11} color={C.primary} />
-                        <span
-                          style={{
-                            fontSize: 11,
-                            fontWeight: 700,
-                            color: C.primary,
-                          }}
-                        >
-                          {order.time}
-                        </span>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                          background: C.surface,
-                          borderRadius: 8,
-                          padding: "4px 9px",
-                          border: `1px solid ${C.border}`,
-                        }}
-                      >
-                        <Icon name="location" size={11} color={C.textMuted} />
-                        <span
-                          style={{
-                            fontSize: 11,
-                            fontWeight: 700,
-                            color: C.textSub,
-                          }}
-                        >
-                          {order.distance}
-                        </span>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      <a
-                        href={`tel:${order.phone}`}
-                        style={{ textDecoration: "none", flex: 1 }}
-                      >
-                        <button
-                          style={{
-                            width: "100%",
-                            padding: "10px",
-                            background: C.surface,
-                            color: C.textSub,
-                            border: `1px solid ${C.border}`,
-                            borderRadius: 12,
-                            fontSize: 13,
-                            fontWeight: 700,
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: 6,
-                          }}
-                        >
-                          <Icon name="phone" size={14} color={C.textSub} />
-                          Call
-                        </button>
-                      </a>
-                      <button
-                        onClick={() => handleAccept(order.id)}
-                        style={{
-                          flex: 2,
-                          padding: "10px",
-                          background: isAccepted
-                            ? C.accent
-                            : `linear-gradient(135deg, ${C.primary}, ${C.primaryDark})`,
-                          color: "white",
-                          border: "none",
-                          borderRadius: 12,
-                          fontSize: 13,
-                          fontWeight: 700,
-                          cursor: "pointer",
-                          boxShadow: `0 4px 14px ${
-                            isAccepted
-                              ? "rgba(0,196,140,0.3)"
-                              : "rgba(26,107,232,0.3)"
-                          }`,
-                        }}
-                      >
-                        {isAccepted ? "✓ Accepted · Navigate" : "Accept Pickup"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          : completedOrders.map((o) => (
-              <div
-                key={o.id}
-                style={{
-                  background: C.white,
-                  borderRadius: 16,
-                  padding: "14px 16px",
-                  marginBottom: 10,
-                  border: `1px solid ${C.border}`,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>
-                    {o.customer}
-                  </div>
-                  <div
-                    style={{ fontSize: 12, color: C.textMuted, marginTop: 2 }}
-                  >
-                    #{o.id} · {o.date}
-                  </div>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <div
-                    style={{ fontSize: 16, fontWeight: 800, color: C.accent }}
-                  >
-                    {o.earning}
-                  </div>
-                  <div
-                    style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}
-                  >
-                    ✓ Done
-                  </div>
-                </div>
-              </div>
-            ))}
-      </div>
-    </div>
-  );
-};
-
-// ── ROLE SCREEN ────────────────────────────────────────────────────────────────
-const RoleScreen = ({ onSelect }) => {
-  const [hovered, setHovered] = useState(null);
-  return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        zIndex: 998,
-        background: `linear-gradient(160deg, #0D1B35 0%, #1A3A6B 55%, #1355C0 100%)`,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-      }}
-    >
-      <style>{`
-        @keyframes roleIn{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
-        @keyframes floatBg{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.03)}}
-      `}</style>
-      <div
-        style={{
-          position: "absolute",
-          width: 280,
-          height: 280,
-          borderRadius: "50%",
-          background: "rgba(26,107,232,0.12)",
-          top: -60,
-          right: -60,
-          animation: "floatBg 6s ease-in-out infinite",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: 200,
-          height: 200,
-          borderRadius: "50%",
-          background: "rgba(0,196,140,0.08)",
-          bottom: -40,
-          left: -40,
-          animation: "floatBg 8s ease-in-out infinite reverse",
-        }}
-      />
-      {/* Logo */}
-      <div
-        style={{
-          width: 68,
-          height: 68,
-          borderRadius: 22,
-          background: "rgba(255,255,255,0.1)",
-          border: "1.5px solid rgba(255,255,255,0.2)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 20,
-          overflow: "hidden",
-        }}
-      >
-        <img
-          src={LOGO_URL}
-          alt="Clean24"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={(e) => {
-            e.target.style.display = "none";
-            e.target.parentNode.innerHTML =
-              "<span style='font-size:22px;font-weight:900;color:white'>C24</span>";
-          }}
-        />
-      </div>
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: 8,
-          animation: "roleIn 0.5s 0.1s ease both",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 26,
-            fontWeight: 800,
-            color: "white",
-            letterSpacing: -0.5,
-          }}
-        >
-          Who are you?
-        </div>
-        <div
-          style={{
-            fontSize: 14,
-            color: "rgba(255,255,255,0.5)",
-            marginTop: 6,
-            lineHeight: 1.5,
-          }}
-        >
-          Choose your role to get started with Clean24
-        </div>
-      </div>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
-          marginTop: 24,
-        }}
-      >
-        {/* Customer */}
-        <button
-          onMouseEnter={() => setHovered("customer")}
-          onMouseLeave={() => setHovered(null)}
-          onClick={() => onSelect("customer")}
-          style={{
-            width: "100%",
-            padding: "0",
-            background:
-              hovered === "customer"
-                ? "rgba(255,255,255,0.97)"
-                : "rgba(255,255,255,0.92)",
-            borderRadius: 20,
-            border: `2px solid ${
-              hovered === "customer" ? C.primary : "transparent"
-            }`,
-            cursor: "pointer",
-            overflow: "hidden",
-            animation: "roleIn 0.5s 0.2s ease both",
-            transition: "all 0.2s",
-            boxShadow:
-              hovered === "customer"
-                ? `0 12px 40px rgba(26,107,232,0.35)`
-                : "0 4px 20px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-              padding: "20px 22px",
-            }}
-          >
-            <div
-              style={{
-                width: 56,
-                height: 56,
-                borderRadius: 18,
-                background: C.primaryLight,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <span style={{ fontSize: 28 }}>🧺</span>
-            </div>
-            <div style={{ textAlign: "left", flex: 1 }}>
-              <div style={{ fontSize: 18, fontWeight: 800, color: C.text }}>
-                Customer
-              </div>
-              <div
-                style={{
-                  fontSize: 12,
-                  color: C.textSub,
-                  marginTop: 3,
-                  lineHeight: 1.5,
-                }}
-              >
-                Book laundry pickup, track your order, and manage your clothes.
-              </div>
-            </div>
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 10,
-                background: hovered === "customer" ? C.primary : C.primaryLight,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                transition: "all 0.2s",
-              }}
-            >
-              <Icon
-                name="chevron"
-                size={16}
-                color={hovered === "customer" ? "white" : C.primary}
-              />
-            </div>
-          </div>
-          {hovered === "customer" && (
-            <div
-              style={{
-                height: 3,
-                background: `linear-gradient(90deg, ${C.primary}, ${C.accent})`,
-              }}
-            />
-          )}
-        </button>
-        {/* Rider */}
-        <button
-          onMouseEnter={() => setHovered("rider")}
-          onMouseLeave={() => setHovered(null)}
-          onClick={() => onSelect("rider")}
-          style={{
-            width: "100%",
-            padding: "0",
-            background:
-              hovered === "rider"
-                ? "rgba(255,255,255,0.97)"
-                : "rgba(255,255,255,0.92)",
-            borderRadius: 20,
-            border: `2px solid ${
-              hovered === "rider" ? C.accent : "transparent"
-            }`,
-            cursor: "pointer",
-            overflow: "hidden",
-            animation: "roleIn 0.5s 0.3s ease both",
-            transition: "all 0.2s",
-            boxShadow:
-              hovered === "rider"
-                ? `0 12px 40px rgba(0,196,140,0.3)`
-                : "0 4px 20px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-              padding: "20px 22px",
-            }}
-          >
-            <div
-              style={{
-                width: 56,
-                height: 56,
-                borderRadius: 18,
-                background: C.accentLight,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <span style={{ fontSize: 28 }}>🛵</span>
-            </div>
-            <div style={{ textAlign: "left", flex: 1 }}>
-              <div style={{ fontSize: 18, fontWeight: 800, color: C.text }}>
-                Rider
-              </div>
-              <div
-                style={{
-                  fontSize: 12,
-                  color: C.textSub,
-                  marginTop: 3,
-                  lineHeight: 1.5,
-                }}
-              >
-                Accept pickup jobs, earn money, and deliver for Clean24
-                customers.
-              </div>
-            </div>
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 10,
-                background: hovered === "rider" ? C.accent : C.accentLight,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                transition: "all 0.2s",
-              }}
-            >
-              <Icon
-                name="chevron"
-                size={16}
-                color={hovered === "rider" ? "white" : C.accent}
-              />
-            </div>
-          </div>
-          {hovered === "rider" && (
-            <div
-              style={{
-                height: 3,
-                background: `linear-gradient(90deg, ${C.accent}, #00A878)`,
-              }}
-            />
-          )}
-        </button>
-      </div>
-      <div
-        style={{
-          marginTop: 24,
-          fontSize: 12,
-          color: "rgba(255,255,255,0.3)",
-          animation: "roleIn 0.5s 0.4s ease both",
-        }}
-      >
-        You can switch roles anytime from your profile
-      </div>
-    </div>
-  );
-};
-
-// ── SPLASH SCREEN ──────────────────────────────────────────────────────────────
+// ── SPLASH ────────────────────────────────────────────────────────────────────
 const SplashScreen = ({ onDone }) => {
   const [phase, setPhase] = useState("in");
   useEffect(() => {
@@ -4711,9 +3697,11 @@ const SplashScreen = ({ onDone }) => {
       }}
     >
       <style>{`
-        @keyframes splashText{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
-        @keyframes splashDot{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
-        @keyframes floatBg{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.03)}}
+        @keyframes splashRing { 0%{transform:scale(0.6);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1);opacity:1} }
+        @keyframes splashLogo { 0%{transform:scale(0.5) translateY(20px);opacity:0} 70%{transform:scale(1.06) translateY(-4px);opacity:1} 100%{transform:scale(1) translateY(0);opacity:1} }
+        @keyframes splashText { 0%{opacity:0;transform:translateY(16px)} 100%{opacity:1;transform:translateY(0)} }
+        @keyframes splashDot  { 0%,80%,100%{transform:scale(0)} 40%{transform:scale(1)} }
+        @keyframes floatBg { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-12px) scale(1.03)} }
       `}</style>
       <div
         style={{
@@ -4739,20 +3727,16 @@ const SplashScreen = ({ onDone }) => {
           animation: "floatBg 8s ease-in-out infinite reverse",
         }}
       />
-      <div style={{ width: 200 }}>
+      <div style={{ width: 260 }}>
         <img
           src={LOGO_URL}
           alt="Logo"
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
-          onError={(e) => {
-            e.target.parentNode.innerHTML =
-              "<div style='width:80px;height:80px;background:rgba(255,255,255,0.15);borderRadius:24px;display:flex;alignItems:center;justifyContent:center;fontSize:32px;fontWeight:900;color:white;margin:0 auto'>C24</div>";
-          }}
         />
       </div>
       <div
         style={{
-          marginTop: 28,
+          marginTop: 32,
           animation: "splashText 0.6s 0.5s ease both",
           textAlign: "center",
         }}
@@ -4786,7 +3770,7 @@ const SplashScreen = ({ onDone }) => {
       </div>
       <div
         style={{
-          marginTop: 12,
+          marginTop: 14,
           fontSize: 14,
           color: "rgba(255,255,255,0.4)",
           animation: "splashText 0.6s 0.7s ease both",
@@ -4832,13 +3816,12 @@ const SplashScreen = ({ onDone }) => {
   );
 };
 
-// ── MAIN APP ───────────────────────────────────────────────────────────────────
+// ── MAIN ──────────────────────────────────────────────────────────────────────
 export default function LaundryGoKH() {
   const [splash, setSplash] = useState(true);
-  const [role, setRole] = useState(null); // null = not selected, "customer" | "rider"
   const [tab, setTab] = useState("home");
   const [selectedShop, setSelectedShop] = useState(null);
-  const [subScreen, setSubScreen] = useState(null); // "detail"|"booking"|"tracking"|"allShops"
+  const [subScreen, setSubScreen] = useState(null);
 
   const handleBack = () => {
     if (subScreen === "tracking") {
@@ -4846,21 +3829,18 @@ export default function LaundryGoKH() {
       setSelectedShop(null);
       setTab("orders");
     } else if (subScreen === "booking") setSubScreen("detail");
-    else if (subScreen === "detail" || subScreen === "allShops") {
+    else if (subScreen === "detail") {
       setSubScreen(null);
       setSelectedShop(null);
     }
   };
+
   const handleSelectShop = (shop) => {
     setSelectedShop(shop);
     setSubScreen("detail");
   };
 
   const renderScreen = () => {
-    if (subScreen === "allShops")
-      return (
-        <AllShopsScreen onBack={handleBack} onSelectShop={handleSelectShop} />
-      );
     if (subScreen === "detail" && selectedShop)
       return (
         <DetailScreen
@@ -4883,23 +3863,13 @@ export default function LaundryGoKH() {
     if (tab === "orders")
       return <HistoryScreen onTrack={() => setSubScreen("tracking")} />;
     if (tab === "profile") return <ProfileScreen />;
-    return (
-      <HomeScreen
-        onSelectShop={handleSelectShop}
-        onSeeAll={() => setSubScreen("allShops")}
-      />
-    );
+    return <HomeScreen onSelectShop={handleSelectShop} />;
   };
 
   const navItems = [
     { id: "home", icon: "home", label: "Home" },
     { id: "search", icon: "search", label: "Explore" },
     { id: "orders", icon: "orders", label: "Orders" },
-    { id: "profile", icon: "profile", label: "Profile" },
-  ];
-
-  const riderNavItems = [
-    { id: "home", icon: "home", label: "Dashboard" },
     { id: "profile", icon: "profile", label: "Profile" },
   ];
 
@@ -4926,11 +3896,7 @@ export default function LaundryGoKH() {
           position: "relative",
         }}
       >
-        {/* Splash */}
         {splash && <SplashScreen onDone={() => setSplash(false)} />}
-        {/* Role selection */}
-        {!splash && !role && <RoleScreen onSelect={setRole} />}
-        {/* Status bar */}
         <div
           style={{
             background: C.white,
@@ -4946,23 +3912,8 @@ export default function LaundryGoKH() {
           }}
         >
           <span>9:41</span>
-          {role === "rider" && (
-            <span
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                color: C.accent,
-                background: C.accentLight,
-                padding: "2px 8px",
-                borderRadius: 8,
-              }}
-            >
-              🛵 RIDER
-            </span>
-          )}
           <span style={{ fontSize: 14 }}>📶 🔋</span>
         </div>
-        {/* Main content */}
         <div
           style={{
             flex: 1,
@@ -4972,10 +3923,9 @@ export default function LaundryGoKH() {
             overflow: "hidden",
           }}
         >
-          {role === "rider" ? <RiderDashboard /> : renderScreen()}
+          {renderScreen()}
         </div>
-        {/* Bottom nav */}
-        {!subScreen && role !== "rider" && (
+        {!subScreen && (
           <div
             style={{
               width: "100%",
@@ -5028,76 +3978,6 @@ export default function LaundryGoKH() {
                 </button>
               );
             })}
-          </div>
-        )}
-        {/* Rider bottom nav */}
-        {role === "rider" && (
-          <div
-            style={{
-              width: "100%",
-              height: 66,
-              background: C.white,
-              borderTop: `1px solid ${C.border}`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-around",
-              flexShrink: 0,
-              boxShadow: "0 -4px 24px rgba(13,27,53,0.07)",
-            }}
-          >
-            {riderNavItems.map((item) => (
-              <button
-                key={item.id}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 3,
-                  background:
-                    item.id === "home" ? C.accentLight : "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "8px 24px",
-                  borderRadius: 14,
-                }}
-              >
-                <Icon
-                  name={item.icon}
-                  size={22}
-                  color={item.id === "home" ? C.accent : C.textMuted}
-                />
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: item.id === "home" ? 800 : 500,
-                    color: item.id === "home" ? C.accent : C.textMuted,
-                  }}
-                >
-                  {item.label}
-                </span>
-              </button>
-            ))}
-            <button
-              onClick={() => setRole(null)}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 3,
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: "8px 24px",
-                borderRadius: 14,
-              }}
-            >
-              <span style={{ fontSize: 22 }}>🔄</span>
-              <span
-                style={{ fontSize: 11, fontWeight: 500, color: C.textMuted }}
-              >
-                Switch Role
-              </span>
-            </button>
           </div>
         )}
       </div>
