@@ -4761,21 +4761,6 @@ const SplashScreen = ({ onDone }) => {
       >
         <div
           style={{
-            fontSize: 32,
-            fontWeight: 800,
-            letterSpacing: -0.5,
-            color: "white",
-            background:
-              "linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.7) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: 6,
-          }}
-        >
-          Clean 24
-        </div>
-        <div
-          style={{
             fontSize: 13,
             color: "rgba(255,255,255,0.55)",
             fontWeight: 500,
