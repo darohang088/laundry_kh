@@ -2119,7 +2119,7 @@ const HomeScreen = ({ onSelectShop, onSeeAll }) => (
               lineHeight: 1.2,
             }}
           >
-            Good morning, Daro 👋
+            Good morning, Sovana Smey 👋
           </div>
           <div style={{ fontSize: 13, color: C.textSub, marginTop: 3 }}>
             Find a trusted laundry near you
@@ -3675,7 +3675,7 @@ const ProfileScreen = ({ onSwitchRole, onLogout }) => (
           </div>
           <div>
             <div style={{ fontSize: 21, fontWeight: 800, color: "white" }}>
-              Daro Hang
+              Sovana Smey Hang
             </div>
             <div
               style={{
@@ -4005,7 +4005,7 @@ const RiderProfileScreen = ({ onSwitchRole, onLogout }) => (
               letterSpacing: -0.3,
             }}
           >
-            Daro Hang
+            Sovana Smey Hang
           </div>
           <div
             style={{
@@ -4170,7 +4170,7 @@ const RiderProfileScreen = ({ onSwitchRole, onLogout }) => (
         </div>
         {[
           { icon: "📱", label: "Phone", val: "+855 12 345 678" },
-          { icon: "📧", label: "Email", val: "daro.hang@gmail.com" },
+          { icon: "📧", label: "Email", val: "Sovana Smey.hang@gmail.com" },
           { icon: "📍", label: "Address", val: "BKK1, Street 51, Phnom Penh" },
           { icon: "🪪", label: "National ID", val: "KH-098-123-456" },
         ].map((row, i, arr) => (
@@ -4516,7 +4516,7 @@ const RiderDashboard = () => {
               Rider Mode 🛵
             </div>
             <div style={{ fontSize: 20, fontWeight: 800, color: "white" }}>
-              Hey, Daro!
+              Hey, Sovana Smey!
             </div>
           </div>
           <div style={{ textAlign: "right" }}>
