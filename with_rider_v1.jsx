@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 
-const LOGO_URL = "src/assets/ic_clean24.png";
-const SHOP_IMG = "src/assets/ic_slide_two.jpeg";
+const LOGO_URL =
+  "https://image2url.com/r2/default/images/1775051437513-e80fc1c1-3521-4dd6-92aa-0d8b5d4fee85.png";
+const SHOP_IMG =
+  "https://image2url.com/r2/default/images/1775051585835-59bbf852-17c7-45d0-a271-63e8bb9653fb.jpeg";
 const MAP_IMG =
   "https://media.wired.com/photos/59269cd37034dc5f91bec0f1/3:2/w_2560%2Cc_limit/GoogleMapTA.jpg";
 const bannerImages = [
-  "src/assets/ic_slide_four.jpg",
-  "src/assets/ic_slide_one.jpg",
-  "src/assets/ic_slide_two.jpeg",
-  "src/assets/ic_slide_three.jpg",
+  "https://image2url.com/r2/default/images/1775051682020-fdeeddd9-36af-4cdd-a661-29ee700c51e5.jpg",
+  "https://scontent.fpnh22-1.fna.fbcdn.net/v/t39.30808-6/656452300_930851139708844_8021449331658021139_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=RfzBMUlIJWQQ7kNvwGz1-0F&_nc_oc=AdqfJLdbi6hQrGp_8by5j8VWBsoWzn6E75HILgOvBfB4wu-S2HY5MisPYGefo2enHKc&_nc_zt=23&_nc_ht=scontent.fpnh22-1.fna&_nc_gid=wyojzRlS7Zf0ANlwKQZfgg&_nc_ss=7a3a8&oh=00_Af0e46ta87yPZ4CQuT5h7pIl8RScf-9A38NVhUE7W88CZA&oe=69D2EE1E",
+  "https://image2url.com/r2/default/images/1775051585835-59bbf852-17c7-45d0-a271-63e8bb9653fb.jpeg",
+  "https://image2url.com/r2/default/images/1775051622819-7b2c1a0c-051a-46d3-8505-9be086aff21b.jpg",
 ];
 
 const C = {
@@ -1188,6 +1190,7 @@ const AllShopsScreen = ({ onBack, onSelectShop }) => {
         overflow: "hidden",
       }}
     >
+      {/* Header */}
       <div
         style={{
           background: C.white,
@@ -1257,6 +1260,7 @@ const AllShopsScreen = ({ onBack, onSelectShop }) => {
             ))}
           </div>
         </div>
+        {/* Filter chips */}
         <div
           style={{
             display: "flex",
@@ -1290,6 +1294,7 @@ const AllShopsScreen = ({ onBack, onSelectShop }) => {
           ))}
         </div>
       </div>
+      {/* Shop list */}
       <div style={{ flex: 1, overflowY: "auto", padding: "16px 18px 28px" }}>
         {filtered.length === 0 ? (
           <div
@@ -1503,6 +1508,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
         <Icon name="close" size={14} color={C.textSub} />
       </button>
       <div style={{ padding: "4px 18px 24px" }}>
+        {/* Header — added paddingRight to avoid overlap with close btn */}
         <div
           style={{
             display: "flex",
@@ -1549,6 +1555,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             <div style={{ fontSize: 11, color: C.textMuted }}>/kg</div>
           </div>
         </div>
+        {/* Status row */}
         <div
           style={{
             display: "flex",
@@ -1613,6 +1620,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             </span>
           </div>
         </div>
+        {/* Services */}
         <div style={{ marginBottom: 14 }}>
           <div
             style={{
@@ -1649,6 +1657,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             ))}
           </div>
         </div>
+        {/* Stats row */}
         <div
           style={{
             background: C.surface,
@@ -1698,6 +1707,7 @@ const PinPopup = ({ pin, onClose, onViewShop }) => {
             <div style={{ fontSize: 11, color: C.textMuted }}>Status</div>
           </div>
         </div>
+        {/* CTA */}
         <div style={{ display: "flex", gap: 10 }}>
           <a
             href={pin.mapUrl}
@@ -1801,6 +1811,7 @@ const ExploreScreen = ({ onSelectShop }) => {
         @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
         @keyframes pinDrop{from{transform:translateY(-12px);opacity:0}to{transform:translateY(0);opacity:1}}
       `}</style>
+      {/* Map */}
       <div
         style={{ position: "absolute", inset: 0, overflow: "hidden" }}
         onClick={() => setActivePin(null)}
@@ -1841,6 +1852,7 @@ const ExploreScreen = ({ onSelectShop }) => {
             />
           </div>
         ))}
+        {/* User dot */}
         <div
           style={{
             position: "absolute",
@@ -1876,6 +1888,7 @@ const ExploreScreen = ({ onSelectShop }) => {
           />
         </div>
       </div>
+      {/* Top bar — fixed layout, smaller logo */}
       <div
         style={{
           position: "absolute",
@@ -1903,6 +1916,7 @@ const ExploreScreen = ({ onSelectShop }) => {
               padding: "10px 14px",
             }}
           >
+            {/* Smaller logo — 22px */}
             <div
               style={{
                 width: 22,
@@ -1992,6 +2006,7 @@ const ExploreScreen = ({ onSelectShop }) => {
           </div>
         </div>
       </div>
+      {/* Controls */}
       <div
         style={{
           position: "absolute",
@@ -2487,6 +2502,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
   });
   const [time, setTime] = useState("now");
   const [kg, setKg] = useState(3);
+  // Schedule picker state
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
 
@@ -2501,6 +2517,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
   const selected = Object.keys(services).filter((k) => services[k]);
   const total = selected.reduce((s, k) => s + svcPrice[k] * kg, 0).toFixed(2);
 
+  // Generate next 5 days
   const days = Array.from({ length: 5 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() + i);
@@ -2525,6 +2542,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
     "4:00 PM",
     "5:00 PM",
   ];
+
   const canConfirm =
     selected.length > 0 &&
     (time === "now" || (time === "schedule" && selectedDate && selectedSlot));
@@ -2565,6 +2583,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
         </div>
       </div>
       <div style={{ padding: "18px 18px 28px" }}>
+        {/* Services */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -2641,6 +2660,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
               </div>
             ))}
         </div>
+        {/* Weight */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -2720,6 +2740,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             </button>
           </div>
         </div>
+        {/* Pickup Time */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -2772,6 +2793,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
               </div>
             ))}
           </div>
+          {/* Right Now info */}
           {time === "now" && (
             <div
               style={{
@@ -2806,6 +2828,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
               </div>
             </div>
           )}
+          {/* Schedule picker */}
           {time === "schedule" && (
             <div
               style={{
@@ -2972,6 +2995,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             </div>
           )}
         </div>
+        {/* Address */}
         <div style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -3019,6 +3043,7 @@ const BookingScreen = ({ shop, onBack, onConfirm }) => {
             <Icon name="chevron" size={16} color={C.textMuted} />
           </div>
         </div>
+        {/* Price summary */}
         <div
           style={{
             background: C.white,
@@ -3638,7 +3663,7 @@ const HistoryScreen = ({ onTrack }) => (
 );
 
 // ── PROFILE SCREEN ─────────────────────────────────────────────────────────────
-const ProfileScreen = ({ onSwitchRole, onLogout }) => (
+const ProfileScreen = () => (
   <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
     <BgImage
       height={185}
@@ -3891,539 +3916,21 @@ const ProfileScreen = ({ onSwitchRole, onLogout }) => (
           </div>
         ))}
       </div>
-      <div style={{ display: "flex", gap: 10, marginBottom: 0 }}>
-        <button
-          onClick={onSwitchRole}
-          style={{
-            flex: 1,
-            padding: "14px",
-            background: C.primaryLight,
-            color: C.primary,
-            border: `1.5px solid ${C.primary}30`,
-            borderRadius: 14,
-            fontSize: 14,
-            fontWeight: 700,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 7,
-          }}
-        >
-          <span>🔄</span> Switch Role
-        </button>
-        <button
-          onClick={onLogout}
-          style={{
-            flex: 1,
-            padding: "14px",
-            background: "#FFF2F2",
-            color: C.red,
-            border: `1.5px solid ${C.red}18`,
-            borderRadius: 14,
-            fontSize: 14,
-            fontWeight: 700,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 7,
-          }}
-        >
-          <span>🚪</span> Log Out
-        </button>
-      </div>
-    </div>
-  </div>
-);
-
-// ── RIDER PROFILE SCREEN ───────────────────────────────────────────────────────
-const RiderProfileScreen = ({ onSwitchRole, onLogout }) => (
-  <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
-    <div
-      style={{
-        background: `linear-gradient(135deg, ${C.accent} 0%, #00A878 100%)`,
-        padding: "32px 20px 24px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div
+      <button
         style={{
-          position: "absolute",
-          width: 180,
-          height: 180,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.08)",
-          top: -60,
-          right: -40,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: 120,
-          height: 120,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.06)",
-          bottom: -30,
-          left: -20,
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
-          position: "relative",
-          zIndex: 1,
+          width: "100%",
+          padding: "14px",
+          background: "#FFF2F2",
+          color: C.red,
+          border: `1.5px solid ${C.red}18`,
+          borderRadius: 14,
+          fontSize: 14,
+          fontWeight: 700,
+          cursor: "pointer",
         }}
       >
-        <div
-          style={{
-            width: 68,
-            height: 68,
-            borderRadius: 22,
-            background: "rgba(255,255,255,0.22)",
-            border: "2.5px solid rgba(255,255,255,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 30,
-            flexShrink: 0,
-          }}
-        >
-          🛵
-        </div>
-        <div>
-          <div
-            style={{
-              fontSize: 22,
-              fontWeight: 800,
-              color: "white",
-              letterSpacing: -0.3,
-            }}
-          >
-            Daro Hang
-          </div>
-          <div
-            style={{
-              fontSize: 13,
-              color: "rgba(255,255,255,0.75)",
-              marginTop: 2,
-            }}
-          >
-            +855 12 345 678
-          </div>
-          <div
-            style={{
-              marginTop: 8,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              background: "rgba(255,255,255,0.2)",
-              borderRadius: 20,
-              padding: "4px 12px",
-            }}
-          >
-            <div
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "white",
-              }}
-            />
-            <span
-              style={{
-                fontSize: 11,
-                color: "white",
-                fontWeight: 700,
-                letterSpacing: 0.3,
-              }}
-            >
-              Active Rider · Rider ID #R-4821
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style={{ padding: "16px 18px 32px" }}>
-      <div
-        style={{
-          background: C.white,
-          borderRadius: 18,
-          padding: "16px",
-          border: `1px solid ${C.border}`,
-          marginBottom: 14,
-          boxShadow: "0 2px 12px rgba(13,27,53,0.06)",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 13,
-            fontWeight: 700,
-            color: C.textMuted,
-            textTransform: "uppercase",
-            letterSpacing: 0.5,
-            marginBottom: 14,
-          }}
-        >
-          April Earnings
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: 10,
-            marginBottom: 14,
-          }}
-        >
-          {[
-            { val: "$47.20", label: "This Month", color: C.accent },
-            { val: "31", label: "Deliveries", color: C.primary },
-            { val: "$1.52", label: "Avg / Trip", color: "#FF8C00" },
-          ].map((s) => (
-            <div
-              key={s.label}
-              style={{
-                background: C.surface,
-                borderRadius: 14,
-                padding: "12px 8px",
-                textAlign: "center",
-                border: `1px solid ${C.border}`,
-              }}
-            >
-              <div style={{ fontSize: 16, fontWeight: 800, color: s.color }}>
-                {s.val}
-              </div>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: C.textMuted,
-                  marginTop: 3,
-                  lineHeight: 1.3,
-                }}
-              >
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ marginBottom: 4 }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: 6,
-            }}
-          >
-            <span style={{ fontSize: 12, color: C.textSub, fontWeight: 600 }}>
-              Monthly Goal
-            </span>
-            <span style={{ fontSize: 12, color: C.accent, fontWeight: 700 }}>
-              $47.20 / $80.00
-            </span>
-          </div>
-          <div
-            style={{
-              height: 7,
-              background: C.surface,
-              borderRadius: 10,
-              overflow: "hidden",
-              border: `1px solid ${C.border}`,
-            }}
-          >
-            <div
-              style={{
-                height: "100%",
-                width: "59%",
-                background: `linear-gradient(90deg, ${C.accent}, #00E0A0)`,
-                borderRadius: 10,
-              }}
-            />
-          </div>
-          <div style={{ fontSize: 11, color: C.textMuted, marginTop: 5 }}>
-            59% — keep going! 🎯
-          </div>
-        </div>
-      </div>
-      <div
-        style={{
-          background: C.white,
-          borderRadius: 18,
-          padding: "16px",
-          border: `1px solid ${C.border}`,
-          marginBottom: 14,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 14,
-            fontWeight: 700,
-            color: C.text,
-            marginBottom: 14,
-          }}
-        >
-          Personal Information
-        </div>
-        {[
-          { icon: "📱", label: "Phone", val: "+855 12 345 678" },
-          { icon: "📧", label: "Email", val: "daro.hang@gmail.com" },
-          { icon: "📍", label: "Address", val: "BKK1, Street 51, Phnom Penh" },
-          { icon: "🪪", label: "National ID", val: "KH-098-123-456" },
-        ].map((row, i, arr) => (
-          <div
-            key={row.label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "11px 0",
-              borderBottom:
-                i < arr.length - 1 ? `1px solid ${C.border}` : "none",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div
-                style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: 12,
-                  background: C.primaryLight,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 17,
-                }}
-              >
-                {row.icon}
-              </div>
-              <div>
-                <div
-                  style={{ fontSize: 11, color: C.textMuted, fontWeight: 600 }}
-                >
-                  {row.label}
-                </div>
-                <div
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 700,
-                    color: C.text,
-                    marginTop: 1,
-                  }}
-                >
-                  {row.val}
-                </div>
-              </div>
-            </div>
-            <Icon name="chevron" size={15} color={C.textMuted} />
-          </div>
-        ))}
-      </div>
-      <div
-        style={{
-          background: C.white,
-          borderRadius: 18,
-          padding: "16px",
-          border: `1px solid ${C.border}`,
-          marginBottom: 14,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 14,
-            fontWeight: 700,
-            color: C.text,
-            marginBottom: 14,
-          }}
-        >
-          Vehicle & Documents
-        </div>
-        {[
-          {
-            icon: "🛵",
-            label: "Vehicle",
-            val: "Honda Wave 110 · 2021",
-            badge: null,
-          },
-          {
-            icon: "🔖",
-            label: "License Plate",
-            val: "PP 2B-3847",
-            badge: null,
-          },
-          {
-            icon: "📄",
-            label: "Driver's License",
-            val: "KH-DL-20210934",
-            badge: "Valid",
-          },
-          {
-            icon: "🛡️",
-            label: "Insurance",
-            val: "Forte Insurance · Exp Dec 2025",
-            badge: "Active",
-          },
-        ].map((row, i, arr) => (
-          <div
-            key={row.label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "11px 0",
-              borderBottom:
-                i < arr.length - 1 ? `1px solid ${C.border}` : "none",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div
-                style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: 12,
-                  background: C.accentLight,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 17,
-                }}
-              >
-                {row.icon}
-              </div>
-              <div>
-                <div
-                  style={{ fontSize: 11, color: C.textMuted, fontWeight: 600 }}
-                >
-                  {row.label}
-                </div>
-                <div
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 700,
-                    color: C.text,
-                    marginTop: 1,
-                  }}
-                >
-                  {row.val}
-                </div>
-              </div>
-            </div>
-            {row.badge ? (
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: C.accent,
-                  background: C.accentLight,
-                  borderRadius: 8,
-                  padding: "3px 9px",
-                }}
-              >
-                {row.badge}
-              </span>
-            ) : (
-              <Icon name="chevron" size={15} color={C.textMuted} />
-            )}
-          </div>
-        ))}
-      </div>
-      <div
-        style={{
-          background: C.white,
-          borderRadius: 18,
-          padding: "4px 16px",
-          border: `1px solid ${C.border}`,
-          marginBottom: 14,
-        }}
-      >
-        {[
-          { emoji: "🔔", label: "Notifications", sub: "Pickup alerts on" },
-          { emoji: "⚙️", label: "Settings", sub: "Account & security" },
-        ].map((m, i, arr) => (
-          <div
-            key={m.label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "15px 0",
-              borderBottom:
-                i < arr.length - 1 ? `1px solid ${C.border}` : "none",
-              cursor: "pointer",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 12,
-                  background: C.accentLight,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 19,
-                }}
-              >
-                {m.emoji}
-              </div>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>
-                  {m.label}
-                </div>
-                <div style={{ fontSize: 12, color: C.textMuted, marginTop: 1 }}>
-                  {m.sub}
-                </div>
-              </div>
-            </div>
-            <Icon name="chevron" size={16} color={C.textMuted} />
-          </div>
-        ))}
-      </div>
-      <div style={{ display: "flex", gap: 10 }}>
-        <button
-          onClick={onSwitchRole}
-          style={{
-            flex: 1,
-            padding: "14px",
-            background: C.accentLight,
-            color: C.accent,
-            border: `1.5px solid ${C.accent}30`,
-            borderRadius: 14,
-            fontSize: 14,
-            fontWeight: 700,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 7,
-          }}
-        >
-          <span>🔄</span> Switch Role
-        </button>
-        <button
-          onClick={onLogout}
-          style={{
-            flex: 1,
-            padding: "14px",
-            background: "#FFF2F2",
-            color: C.red,
-            border: `1.5px solid ${C.red}18`,
-            borderRadius: 14,
-            fontSize: 14,
-            fontWeight: 700,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 7,
-          }}
-        >
-          <span>🚪</span> Log Out
-        </button>
-      </div>
+        🚪 Sign Out
+      </button>
     </div>
   </div>
 );
@@ -4489,6 +3996,7 @@ const RiderDashboard = () => {
         overflow: "hidden",
       }}
     >
+      {/* Rider header */}
       <div
         style={{
           background: `linear-gradient(135deg, ${C.primary}, ${C.primaryDark})`,
@@ -4527,6 +4035,7 @@ const RiderDashboard = () => {
             </div>
           </div>
         </div>
+        {/* Stats */}
         <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
           {[
             { val: "3", label: "Pending" },
@@ -4558,6 +4067,7 @@ const RiderDashboard = () => {
             </div>
           ))}
         </div>
+        {/* Tabs */}
         <div
           style={{
             display: "flex",
@@ -4591,6 +4101,7 @@ const RiderDashboard = () => {
           ))}
         </div>
       </div>
+      {/* Content */}
       <div style={{ flex: 1, overflowY: "auto", padding: "14px 16px 28px" }}>
         {activeTab === "pending"
           ? pendingOrders.map((order) => {
@@ -4872,7 +4383,7 @@ const RoleScreen = ({ onSelect }) => {
       style={{
         position: "absolute",
         inset: 0,
-        zIndex: 50,
+        zIndex: 998,
         background: `linear-gradient(160deg, #0D1B35 0%, #1A3A6B 55%, #1355C0 100%)`,
         display: "flex",
         flexDirection: "column",
@@ -4909,6 +4420,7 @@ const RoleScreen = ({ onSelect }) => {
           animation: "floatBg 8s ease-in-out infinite reverse",
         }}
       />
+      {/* Logo */}
       <div
         style={{
           width: 68,
@@ -4971,6 +4483,7 @@ const RoleScreen = ({ onSelect }) => {
           marginTop: 24,
         }}
       >
+        {/* Customer */}
         <button
           onMouseEnter={() => setHovered("customer")}
           onMouseLeave={() => setHovered(null)}
@@ -5062,6 +4575,7 @@ const RoleScreen = ({ onSelect }) => {
             />
           )}
         </button>
+        {/* Rider */}
         <button
           onMouseEnter={() => setHovered("rider")}
           onMouseLeave={() => setHovered(null)}
@@ -5245,21 +4759,6 @@ const SplashScreen = ({ onDone }) => {
           textAlign: "center",
         }}
       >
-        {/* <div
-          style={{
-            fontSize: 32,
-            fontWeight: 800,
-            letterSpacing: -0.5,
-            color: "white",
-            background:
-              "linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.7) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: 6,
-          }}
-        >
-          Clean 24
-        </div> */}
         <div
           style={{
             fontSize: 13,
@@ -5323,19 +4822,10 @@ const SplashScreen = ({ onDone }) => {
 // ── MAIN APP ───────────────────────────────────────────────────────────────────
 export default function LaundryGoKH() {
   const [splash, setSplash] = useState(true);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState(null); // null = not selected, "customer" | "rider"
   const [tab, setTab] = useState("home");
-  const [riderTab, setRiderTab] = useState("dashboard");
   const [selectedShop, setSelectedShop] = useState(null);
-  const [subScreen, setSubScreen] = useState(null);
-
-  const handleResetRole = () => {
-    setRole(null);
-    setTab("home");
-    setRiderTab("dashboard");
-    setSubScreen(null);
-    setSelectedShop(null);
-  };
+  const [subScreen, setSubScreen] = useState(null); // "detail"|"booking"|"tracking"|"allShops"
 
   const handleBack = () => {
     if (subScreen === "tracking") {
@@ -5348,13 +4838,12 @@ export default function LaundryGoKH() {
       setSelectedShop(null);
     }
   };
-
   const handleSelectShop = (shop) => {
     setSelectedShop(shop);
     setSubScreen("detail");
   };
 
-  const renderCustomerScreen = () => {
+  const renderScreen = () => {
     if (subScreen === "allShops")
       return (
         <AllShopsScreen onBack={handleBack} onSelectShop={handleSelectShop} />
@@ -5380,13 +4869,7 @@ export default function LaundryGoKH() {
       return <ExploreScreen onSelectShop={handleSelectShop} />;
     if (tab === "orders")
       return <HistoryScreen onTrack={() => setSubScreen("tracking")} />;
-    if (tab === "profile")
-      return (
-        <ProfileScreen
-          onSwitchRole={handleResetRole}
-          onLogout={handleResetRole}
-        />
-      );
+    if (tab === "profile") return <ProfileScreen />;
     return (
       <HomeScreen
         onSelectShop={handleSelectShop}
@@ -5395,15 +4878,15 @@ export default function LaundryGoKH() {
     );
   };
 
-  const customerNav = [
+  const navItems = [
     { id: "home", icon: "home", label: "Home" },
     { id: "search", icon: "search", label: "Explore" },
     { id: "orders", icon: "orders", label: "Orders" },
     { id: "profile", icon: "profile", label: "Profile" },
   ];
 
-  const riderNav = [
-    { id: "dashboard", icon: "home", label: "Dashboard" },
+  const riderNavItems = [
+    { id: "home", icon: "home", label: "Dashboard" },
     { id: "profile", icon: "profile", label: "Profile" },
   ];
 
@@ -5416,7 +4899,6 @@ export default function LaundryGoKH() {
         html, body, #root { height: 100%; margin: 0; font-family: 'DM Sans', sans-serif; background: #D5DAE8; }
         button { font-family: inherit; }
       `}</style>
-
       <div
         style={{
           fontFamily: "'DM Sans', sans-serif",
@@ -5431,190 +4913,179 @@ export default function LaundryGoKH() {
           position: "relative",
         }}
       >
-        {/* ── Splash: highest z-index, fades out over role screen ── */}
+        {/* Splash */}
         {splash && <SplashScreen onDone={() => setSplash(false)} />}
-
-        {/* ── Role screen: always mounted once splash starts fading, no white gap ── */}
-        {!role && (
-          <RoleScreen
-            onSelect={(r) => {
-              setRole(r);
-              setTab("home");
-              setRiderTab("dashboard");
-            }}
-          />
-        )}
-
-        {/* ── App: only rendered after a role is chosen ── */}
-        {role && (
-          <>
-            {/* Status bar */}
-            <div
+        {/* Role selection */}
+        {!splash && !role && <RoleScreen onSelect={setRole} />}
+        {/* Status bar */}
+        <div
+          style={{
+            background: C.white,
+            padding: "10px 22px 9px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: 12,
+            fontWeight: 700,
+            color: C.text,
+            borderBottom: `1px solid ${C.border}`,
+            flexShrink: 0,
+          }}
+        >
+          <span>9:41</span>
+          {role === "rider" && (
+            <span
               style={{
-                background: C.white,
-                padding: "10px 22px 9px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: 700,
-                color: C.text,
-                borderBottom: `1px solid ${C.border}`,
-                flexShrink: 0,
+                color: C.accent,
+                background: C.accentLight,
+                padding: "2px 8px",
+                borderRadius: 8,
               }}
             >
-              <span>9:41</span>
-              {role === "rider" && (
+              🛵 RIDER
+            </span>
+          )}
+          <span style={{ fontSize: 14 }}>📶 🔋</span>
+        </div>
+        {/* Main content */}
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            minHeight: 0,
+            overflow: "hidden",
+          }}
+        >
+          {role === "rider" ? <RiderDashboard /> : renderScreen()}
+        </div>
+        {/* Bottom nav */}
+        {!subScreen && role !== "rider" && (
+          <div
+            style={{
+              width: "100%",
+              height: 66,
+              background: C.white,
+              borderTop: `1px solid ${C.border}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              flexShrink: 0,
+              boxShadow: "0 -4px 24px rgba(13,27,53,0.07)",
+            }}
+          >
+            {navItems.map((item) => {
+              const active = tab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setTab(item.id);
+                    setSubScreen(null);
+                    setSelectedShop(null);
+                  }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 3,
+                    background: active ? C.primaryLight : "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "8px 18px",
+                    borderRadius: 14,
+                  }}
+                >
+                  <Icon
+                    name={item.icon}
+                    size={22}
+                    color={active ? C.primary : C.textMuted}
+                  />
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: active ? 800 : 500,
+                      color: active ? C.primary : C.textMuted,
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {/* Rider bottom nav */}
+        {role === "rider" && (
+          <div
+            style={{
+              width: "100%",
+              height: 66,
+              background: C.white,
+              borderTop: `1px solid ${C.border}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              flexShrink: 0,
+              boxShadow: "0 -4px 24px rgba(13,27,53,0.07)",
+            }}
+          >
+            {riderNavItems.map((item) => (
+              <button
+                key={item.id}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 3,
+                  background:
+                    item.id === "home" ? C.accentLight : "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "8px 24px",
+                  borderRadius: 14,
+                }}
+              >
+                <Icon
+                  name={item.icon}
+                  size={22}
+                  color={item.id === "home" ? C.accent : C.textMuted}
+                />
                 <span
                   style={{
                     fontSize: 11,
-                    fontWeight: 700,
-                    color: C.accent,
-                    background: C.accentLight,
-                    padding: "2px 8px",
-                    borderRadius: 8,
+                    fontWeight: item.id === "home" ? 800 : 500,
+                    color: item.id === "home" ? C.accent : C.textMuted,
                   }}
                 >
-                  🛵 RIDER
+                  {item.label}
                 </span>
-              )}
-              <span style={{ fontSize: 14 }}>📶 🔋</span>
-            </div>
-
-            {/* Main content */}
-            <div
+              </button>
+            ))}
+            <button
+              onClick={() => setRole(null)}
               style={{
-                flex: 1,
                 display: "flex",
                 flexDirection: "column",
-                minHeight: 0,
-                overflow: "hidden",
+                alignItems: "center",
+                gap: 3,
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                padding: "8px 24px",
+                borderRadius: 14,
               }}
             >
-              {role === "rider" ? (
-                riderTab === "profile" ? (
-                  <RiderProfileScreen
-                    onSwitchRole={handleResetRole}
-                    onLogout={handleResetRole}
-                  />
-                ) : (
-                  <RiderDashboard />
-                )
-              ) : (
-                renderCustomerScreen()
-              )}
-            </div>
-
-            {/* Customer bottom nav */}
-            {role === "customer" && !subScreen && (
-              <div
-                style={{
-                  width: "100%",
-                  height: 66,
-                  background: C.white,
-                  borderTop: `1px solid ${C.border}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                  flexShrink: 0,
-                  boxShadow: "0 -4px 24px rgba(13,27,53,0.07)",
-                }}
+              <span style={{ fontSize: 22 }}>🔄</span>
+              <span
+                style={{ fontSize: 11, fontWeight: 500, color: C.textMuted }}
               >
-                {customerNav.map((item) => {
-                  const active = tab === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        setTab(item.id);
-                        setSubScreen(null);
-                        setSelectedShop(null);
-                      }}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 3,
-                        background: active ? C.primaryLight : "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: "8px 18px",
-                        borderRadius: 14,
-                      }}
-                    >
-                      <Icon
-                        name={item.icon}
-                        size={22}
-                        color={active ? C.primary : C.textMuted}
-                      />
-                      <span
-                        style={{
-                          fontSize: 11,
-                          fontWeight: active ? 800 : 500,
-                          color: active ? C.primary : C.textMuted,
-                        }}
-                      >
-                        {item.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Rider bottom nav */}
-            {role === "rider" && (
-              <div
-                style={{
-                  width: "100%",
-                  height: 66,
-                  background: C.white,
-                  borderTop: `1px solid ${C.border}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                  flexShrink: 0,
-                  boxShadow: "0 -4px 24px rgba(13,27,53,0.07)",
-                }}
-              >
-                {riderNav.map((item) => {
-                  const active = riderTab === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => setRiderTab(item.id)}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 3,
-                        background: active ? C.accentLight : "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: "8px 28px",
-                        borderRadius: 14,
-                      }}
-                    >
-                      <Icon
-                        name={item.icon}
-                        size={22}
-                        color={active ? C.accent : C.textMuted}
-                      />
-                      <span
-                        style={{
-                          fontSize: 11,
-                          fontWeight: active ? 800 : 500,
-                          color: active ? C.accent : C.textMuted,
-                        }}
-                      >
-                        {item.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </>
+                Switch Role
+              </span>
+            </button>
+          </div>
         )}
       </div>
     </>
