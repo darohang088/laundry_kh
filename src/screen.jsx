@@ -4910,28 +4910,14 @@ const RoleScreen = ({ onSelect }) => {
           animation: "floatBg 8s ease-in-out infinite reverse",
         }}
       />
-      <div
-        style={{
-          width: 68,
-          height: 68,
-          borderRadius: 22,
-          background: "rgba(255,255,255,0.1)",
-          border: "1.5px solid rgba(255,255,255,0.2)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 20,
-          overflow: "hidden",
-        }}
-      >
+      <div style={{ width: 200 }}>
         <img
           src={LOGO_URL}
-          alt="Clean24"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          alt="Logo"
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
           onError={(e) => {
-            e.target.style.display = "none";
             e.target.parentNode.innerHTML =
-              "<span style='font-size:22px;font-weight:900;color:white'>C24</span>";
+              "<div style='width:80px;height:80px;background:rgba(255,255,255,0.15);borderRadius:24px;display:flex;alignItems:center;justifyContent:center;fontSize:32px;fontWeight:900;color:white;margin:0 auto'>C24</div>";
           }}
         />
       </div>
