@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 
-const LOGO_URL = "src/assets/ic_clean24.png";
-const SHOP_IMG = "src/assets/ic_slide_two.jpeg";
+const LOGO_URL =
+  "https://image2url.com/r2/default/images/1775051437513-e80fc1c1-3521-4dd6-92aa-0d8b5d4fee85.png";
+const SHOP_IMG =
+  "https://image2url.com/r2/default/images/1775051585835-59bbf852-17c7-45d0-a271-63e8bb9653fb.jpeg";
 const MAP_IMG =
   "https://media.wired.com/photos/59269cd37034dc5f91bec0f1/3:2/w_2560%2Cc_limit/GoogleMapTA.jpg";
 const bannerImages = [
-  "src/assets/ic_slide_four.jpg",
-  "src/assets/ic_slide_one.jpg",
-  "src/assets/ic_slide_two.jpeg",
-  "src/assets/ic_slide_three.jpg",
+  "https://image2url.com/r2/default/images/1775051682020-fdeeddd9-36af-4cdd-a661-29ee700c51e5.jpg",
+  "https://scontent.fpnh22-1.fna.fbcdn.net/v/t39.30808-6/656452300_930851139708844_8021449331658021139_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=RfzBMUlIJWQQ7kNvwGz1-0F&_nc_oc=AdqfJLdbi6hQrGp_8by5j8VWBsoWzn6E75HILgOvBfB4wu-S2HY5MisPYGefo2enHKc&_nc_zt=23&_nc_ht=scontent.fpnh22-1.fna&_nc_gid=wyojzRlS7Zf0ANlwKQZfgg&_nc_ss=7a3a8&oh=00_Af0e46ta87yPZ4CQuT5h7pIl8RScf-9A38NVhUE7W88CZA&oe=69D2EE1E",
+  "https://image2url.com/r2/default/images/1775051585835-59bbf852-17c7-45d0-a271-63e8bb9653fb.jpeg",
+  "https://image2url.com/r2/default/images/1775051622819-7b2c1a0c-051a-46d3-8505-9be086aff21b.jpg",
 ];
-
 const C = {
   primary: "#1A6BE8",
   primaryLight: "#EBF2FF",
